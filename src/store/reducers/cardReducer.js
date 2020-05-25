@@ -1,25 +1,41 @@
-let cardId = 0;
+// let cardId = 0;
+
+// const initialState = {
+//   "card-0": {
+//       id: `card-0`,
+//     text: "Last Episode",
+//     list: "list-0",
+//   },
+// };
 
 const initialState = {
-  "card-0": {
-      id: `card-0`,
-    text: "Last Episode",
-    list: "list-0",
-  },
+  cardList: [],
+  isLoading: false,
 };
 
-export default function listsReducer(cardState = initialState, action) {
+export default function cardReducer(cardState = initialState, action) {
   switch (action.type) {
-    case "SUCCESS_ADD_CARD":
-      const { text, listId } = action.payload;
-      const newCard = {
-        id: `card-${cardId}`,
-        text: text,
-        list: listId,
+    case "STOP_LOADING":
+      return {
+        ...cardState,
+        isLoading: false,
       };
-      cardId += 1;
-      return { ...cardState, [`card-${cardId}`]: newCard };
-
+    case "SUCCESS_GET_CARDS":
+      return {
+        ...cardState,
+        cardList: action.payload,
+        isLoading: false,
+      };
+    case "SUCCESS_CREATE_CARD":
+      return {
+        ...cardState,
+        isLoading: true,
+      };
+    case "SUCCESS_REORDER_CARD":
+      return {
+        ...cardState,
+        // isLoading: true,
+      };
     case "SUCCESS_EDIT_CARD": {
       const { id, newText } = action.payload;
       const card = cardState[id];

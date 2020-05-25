@@ -5,15 +5,14 @@ import AddButton from "./AddButton";
 import { Droppable, Draggable } from "react-beautiful-dnd";
 
 const TrelloList = (props) => {
-  // console.warn("props cards",props.cards)
   return (
-    <Draggable draggableId={String(props.listID)} index={props.index}>
-      {(provided) => (
+    // <Draggable draggableId={String(props.listId)} index={props.index}>
+    //   {(provided) => (
         <div
           className="list-divider"
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
-          ref={provided.innerRef}
+    //       {...provided.draggableProps}
+    //       {...provided.dragHandleProps}
+    //       ref={provided.innerRef}
         >
           <Droppable droppableId={String(props.listId)} type="card">
             {(provided) => (
@@ -34,8 +33,8 @@ const TrelloList = (props) => {
             )}
           </Droppable>
         </div>
-      )}
-    </Draggable>
+    //   )}
+    // </Draggable>
   );
 };
 

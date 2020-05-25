@@ -4,8 +4,13 @@ import { connect } from "react-redux";
 import { Icon, Button, Card } from "@material-ui/core";
 import TextArea from "react-textarea-autosize";
 
-import { addList, addCard } from "../store/actions/listsAction";
-// import { addCard } from "../store/actions/cardAction";
+import {
+  addList,
+  addCard,
+  changeInputList,
+  createList,
+} from "../store/actions/listsAction";
+import { createCard } from "../store/actions/cardAction";
 
 class AddButton extends Component {
   state = {
@@ -14,8 +19,8 @@ class AddButton extends Component {
   };
 
   componentDidMount = () => {
-    // console.warn("check props form", this.props.listId)
-  }
+    // console.warn("check props form", this.props.listId);
+  };
 
   openForm = () => {
     this.setState({ formOpen: true });
@@ -25,25 +30,28 @@ class AddButton extends Component {
     this.setState({ formOpen: false });
   };
 
-  handleInputChange = (e) => {
-    this.setState({ text: e.target.value });
-  };
-
   handleAddList = () => {
-    const { text } = this.state;
+    const { newTitle } = this.props.lists;
 
-    if (text) {
-      this.props.addList(text);
+    if (newTitle) {
+      this.props.createList(this.props.board.activerBoardId, newTitle);
     }
-    this.setState({ text: "" })
+    this.setState({ newTitle: "" });
   };
 
   handleAddCard = () => {
-    const { text } = this.state;
-    if (text) {
-      this.props.addCard(this.props.listId, text);
+    const { newTitle } = this.props.lists;
+    if (newTitle) {
+      this.props.createCard(this.props.listId, newTitle);
     }
-    this.setState({ text: "" })
+    this.setState({ newTitle: "" });
+  };
+
+  handleKeyPress = (event) => {
+    const submit = this.props.list ? this.handleAddList : this.handleAddCard;
+    if (event.key === "Enter" && event.shiftKey) {
+      submit();
+    }
   };
 
   renderAddButton = () => {
@@ -53,7 +61,7 @@ class AddButton extends Component {
     const buttonTextOpacity = this.props.list ? 1 : 0.5;
     const buttonColor = this.props.list ? "white" : "inherit";
     const buttonTextBackground = this.props.list
-      ? "rgba(0,0,0,.15"
+      ? "rgba(0,0,0,.15)"
       : "transparent";
 
     return (
@@ -86,15 +94,20 @@ class AddButton extends Component {
             placeholder={placeHolder}
             autoFocus
             onBlur={this.closeForm}
-            value={this.state.text}
-            onChange={this.handleInputChange}
+            name="newTitle"
+            // value={this.state.text}
+            onChange={(e) => this.props.changeInputList(e)}
+            onKeyPress={this.handleKeyPress}
           />
         </Card>
         <div className="action-form-group">
-          <Button 
-          className="button-form" 
-          variant="contained" 
-          onMouseDown={this.props.list ? this.handleAddList : this.handleAddCard} >
+          <Button
+            className="button-form"
+            variant="contained"
+            onMouseDown={
+              this.props.list ? this.handleAddList : this.handleAddCard
+            }
+          >
             {buttonTitle}{" "}
           </Button>
           <Icon className="close-form">close</Icon>
@@ -114,10 +127,17 @@ class AddButton extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return {};
+  return {
+    lists: state.lists,
+    board: state.board,
+    isLoading: state.isLoading,
+  };
 };
 const mapDispatchToProps = {
   addList,
-  addCard
+  addCard,
+  changeInputList,
+  createList,
+  createCard,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(AddButton);

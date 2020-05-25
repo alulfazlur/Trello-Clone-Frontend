@@ -1,14 +1,16 @@
 import { createStore, applyMiddleware, combineReducers } from "redux";
 import thunk from "redux-thunk";
 
+import userReducer from "./reducers/userReducer";
 import listsReducer from "./reducers/listsReducer";
 import cardReducer from "./reducers/cardReducer";
-import listOrderReducer from "./reducers/listOrderReducer";
+import boardReducer from "./reducers/boardReducer";
 
 const rootReducer = combineReducers({
+  user : userReducer,
   lists: listsReducer,
-  listOrder: listOrderReducer,
   cards: cardReducer,
+  board: boardReducer,
 });
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
