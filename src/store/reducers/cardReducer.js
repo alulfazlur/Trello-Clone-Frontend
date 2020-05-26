@@ -41,6 +41,11 @@ export default function cardReducer(cardState = initialState, action) {
           ...cardState,
           isLoading: true,
         };
+        case "CHANGE_INPUT_CARD":
+          return {
+            ...cardState,
+            [action.payload.target.name]: action.payload.target.value,
+          };
     case "SUCCESS_EDIT_CARD": {
       const { id, newText } = action.payload;
       const card = cardState[id];

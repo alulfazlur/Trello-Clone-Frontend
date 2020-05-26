@@ -94,7 +94,6 @@ class AddButton extends Component {
             autoFocus
             onBlur={this.closeForm}
             name="newTitle"
-            // value={this.state.text}
             onChange={(e) => this.props.changeInputList(e)}
             onKeyPress={this.handleKeyPress}
           />

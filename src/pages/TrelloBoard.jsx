@@ -15,12 +15,14 @@ import {
   getList,
   createList,
   changeInputList,
+  renameList,
 } from "../store/actions/listsAction";
 import { setActiveBoard } from "../store/actions/boardAction";
 import {
   stopLoading,
   reorderCard,
   renameCard,
+  changeInputCard
 } from "../store/actions/cardAction";
 
 class Board extends Component {
@@ -89,6 +91,12 @@ class Board extends Component {
                         listId={el.id}
                         title={el.title}
                         cards={el.cards}
+                        propList = {this.props.propList}
+                        propCard = {this.props.propCard}
+                        renameList = {(listId, title) => this.props.renameList(listId, title)}
+                        changeInputList = {(e) => this.props.changeInputList(e)}
+                        renameCard = {(id, listId, text) => this.props.renameCard(id, listId, text)}
+                        changeInputCard = {(e) => this.props.changeInputCard(e)}
                       />
                     );
                   })}
@@ -106,6 +114,8 @@ class Board extends Component {
 const mapStateToProps = (state) => {
   return {
     board: state.board,
+    propCard: state.cards,
+    propList: state.lists,
     lists: state.lists.allList,
     cards: state.cards.cardList,
     form: state.lists.formOpen,
@@ -117,11 +127,13 @@ const mapDispatchToProps = {
   getList,
   sortOnDrag,
   createList,
+  renameList,
   changeInputList,
   setActiveBoard,
   stopLoading,
   reorderCard,
   renameCard,
+  changeInputCard
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Board);

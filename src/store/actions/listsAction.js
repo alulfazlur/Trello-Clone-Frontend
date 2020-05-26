@@ -50,6 +50,32 @@ export const createList = (boardId, title) => {
   };
 };
 
+export const renameList = (listId, title) => {
+  return async (dispatch) => {
+    const bodyRequest = {
+      id : listId,
+      title: title,
+    };
+    const myJSON = JSON.stringify(bodyRequest);
+    console.warn("myJSON Body Req", myJSON);
+    const token = localStorage.getItem("token");
+    await axios
+      .put(baseUrl + "/list", myJSON, {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Accept: "application/json; charset=utf-8",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(() => {
+        dispatch({ type: "SUCCESS_RENAME_LIST" });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
 export const addList = (title) => {
   return (dispatch, getState) => {
     dispatch({

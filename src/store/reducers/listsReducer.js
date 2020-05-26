@@ -45,7 +45,11 @@ export default function listsReducer(listsState = initialState, action) {
         ...listsState,
         allList: action.payload,
         isLoading : false,
-
+      };
+      case "SUCCESS_RENAME_LIST":
+        return {
+          ...listsState,
+          isLoading: true,
       };
     case "SUCCESS_CREATE_LIST":
       return {

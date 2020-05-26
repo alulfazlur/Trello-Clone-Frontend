@@ -8,7 +8,7 @@ import { getBoard } from "../store/actions/boardAction";
 import Header from "../components/Header";
 class Home extends Component {
   componentDidMount = async () => {
-    // await this.props.doLogIn();
+    await this.props.doLogIn();
     this.props.getBoard();
     console.warn("checking props", this.props);
   };
