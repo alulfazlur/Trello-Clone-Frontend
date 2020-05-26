@@ -36,6 +36,11 @@ export default function cardReducer(cardState = initialState, action) {
         ...cardState,
         // isLoading: true,
       };
+      case "SUCCESS_RENAME_CARD":
+        return {
+          ...cardState,
+          isLoading: true,
+        };
     case "SUCCESS_EDIT_CARD": {
       const { id, newText } = action.payload;
       const card = cardState[id];

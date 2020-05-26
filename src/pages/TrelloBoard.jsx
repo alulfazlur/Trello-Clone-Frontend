@@ -2,31 +2,42 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 // import { Link } from "react-router-dom";
 // import { Redirect } from "react-router-dom";
+import Header from "../components/Header";
+import BoardHeader from "../components/SecondHeader";
 
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 
 import TrelloList from "../components/TrelloList";
 import AddButton from "../components/AddButton";
 
-import { sortOnDrag, getList, createList, changeInputList } from "../store/actions/listsAction";
+import {
+  sortOnDrag,
+  getList,
+  createList,
+  changeInputList,
+} from "../store/actions/listsAction";
 import { setActiveBoard } from "../store/actions/boardAction";
-import { stopLoading, reorderCard } from "../store/actions/cardAction";
+import {
+  stopLoading,
+  reorderCard,
+  renameCard,
+} from "../store/actions/cardAction";
 
 class Board extends Component {
-  componentDidMount = async() => {
+  componentDidMount = async () => {
     const { boardId } = this.props.match.params;
-    await this.props.getList(boardId)
-    this.props.setActiveBoard(boardId)
+    await this.props.getList(boardId);
+    this.props.setActiveBoard(boardId);
     // console.warn("checking props", this.props);
   };
 
-  componentDidUpdate = async() => {
+  componentDidUpdate = async () => {
     const boardId = this.props.board.activerBoardId;
     if (this.props.isLoadingList || this.props.isLoadingCard) {
-      await this.props.stopLoading()
-      this.props.getList(boardId)
+      await this.props.stopLoading();
+      this.props.getList(boardId);
     }
-  }
+  };
 
   onDragEnd = (result) => {
     const { destination, source, draggableId, type } = result;
@@ -34,7 +45,11 @@ class Board extends Component {
     if (!destination) {
       return;
     }
-    this.props.reorderCard(draggableId, destination.droppableId, destination.index)
+    this.props.reorderCard(
+      draggableId,
+      destination.droppableId,
+      destination.index
+    );
     this.props.sortOnDrag(
       source.droppableId,
       destination.droppableId,
@@ -48,34 +63,43 @@ class Board extends Component {
   render() {
     const lists = this.props.lists;
     return (
-      <DragDropContext onDragEnd={this.onDragEnd}>
-        <h2>My Board</h2>
-        <Droppable droppableId="all-lists" direction="horizontal" type="list">
-          {(provided) => (
-            <div
-              className="list-container"
-              {...provided.droppableProps}
-              ref={provided.innerRef}
+      <React.Fragment>
+        <Header />
+        <div style={{ paddingTop: "50px" }}>
+          <BoardHeader />
+        </div>
+        <DragDropContext onDragEnd={this.onDragEnd}>
+          <div style={{ marginTop: "50px" }}>
+            <Droppable
+              droppableId="all-lists"
+              direction="horizontal"
+              type="list"
             >
-              {lists.map((el, index) => {
-                return (
-                  <TrelloList
-                    key={el.id}
-                    index={index}
-                    listId={el.id}
-                    title={el.title}
-                    cards={el.cards}
-                  />
-                );
-              })
-              }
-              {provided.placeholder}
-              <AddButton list 
-              {...this.props}/>
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
+              {(provided) => (
+                <div
+                  className="list-container"
+                  {...provided.droppableProps}
+                  ref={provided.innerRef}
+                >
+                  {lists.map((el, index) => {
+                    return (
+                      <TrelloList
+                        key={el.id}
+                        index={index}
+                        listId={el.id}
+                        title={el.title}
+                        cards={el.cards}
+                      />
+                    );
+                  })}
+                  {provided.placeholder}
+                  <AddButton list {...this.props} />
+                </div>
+              )}
+            </Droppable>
+          </div>
+        </DragDropContext>
+      </React.Fragment>
     );
   }
 }
@@ -96,7 +120,8 @@ const mapDispatchToProps = {
   changeInputList,
   setActiveBoard,
   stopLoading,
-  reorderCard
+  reorderCard,
+  renameCard,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Board);

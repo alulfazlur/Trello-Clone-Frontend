@@ -77,10 +77,30 @@ export const addCard = (listId, text) => {
     };
   };
 
-  export const editCard = (id, listId, newText) => {
-    return {
-      type: "SUCCESS_EDIT_CARD",
-      payload: { id, listId, newText }
+  export const renameCard = (id, listId, text) => {
+    return async (dispatch) => {
+      const bodyRequest = {
+        id: id,
+        listId : listId,
+        text: text,
+      };
+      const myJSON = JSON.stringify(bodyRequest);
+      console.warn("myJSON Body Req", myJSON);
+      const token = localStorage.getItem("token");
+      await axios
+        .put(baseUrl + "/card", myJSON, {
+          headers: {
+            "Content-Type": "application/json; charset=utf-8",
+            Accept: "application/json; charset=utf-8",
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then(() => {
+          dispatch({ type: "SUCCESS_RENAME_CARD" });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     };
   };
   

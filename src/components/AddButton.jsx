@@ -61,9 +61,8 @@ class AddButton extends Component {
     const buttonTextOpacity = this.props.list ? 1 : 0.5;
     const buttonColor = this.props.list ? "white" : "inherit";
     const buttonTextBackground = this.props.list
-      ? "rgba(0,0,0,.15)"
+      ? "hsla(0,0%,100%,.24)"
       : "transparent";
-
     return (
       <div
         onClick={this.openForm}

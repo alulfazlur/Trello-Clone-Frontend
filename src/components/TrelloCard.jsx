@@ -3,7 +3,8 @@ import React from "react";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
-
+import IconButton from "@material-ui/core/IconButton";
+import CreateOutlinedIcon from "@material-ui/icons/CreateOutlined";
 import { Draggable } from "react-beautiful-dnd";
 
 const TrelloCard = (props) => {
@@ -16,9 +17,14 @@ const TrelloCard = (props) => {
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
-          <Card>
+          <Card className="card">
             <CardContent>
-              <Typography>{props.text}</Typography>
+                <IconButton>
+                  <CreateOutlinedIcon style={{ fontSize: 15, fontWeight: "bold" }}/>
+                </IconButton>
+              <Typography>
+                {props.text}
+              </Typography>
             </CardContent>
           </Card>
         </div>

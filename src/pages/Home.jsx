@@ -4,9 +4,11 @@ import { Link } from "react-router-dom";
 
 import { doLogIn } from "../store/actions/userAction";
 import { getBoard } from "../store/actions/boardAction";
+
+import Header from "../components/Header";
 class Home extends Component {
   componentDidMount = async () => {
-    await this.props.doLogIn();
+    // await this.props.doLogIn();
     this.props.getBoard();
     console.warn("checking props", this.props);
   };
@@ -15,11 +17,17 @@ class Home extends Component {
     const boardList = this.props.boardList;
     return (
       <React.Fragment>
-        {boardList.map((el, index) => (
-          <Link to={`/${el.id}`} key={index}>
-            {el.title}
-          </Link>
-        ))}
+        <Header />
+          <div 
+    style={{paddingTop:"100px"}}
+          >
+            {boardList.map((el, index) => (
+              <Link to={`/${el.id}`} key={index} 
+              >
+                {el.title}
+              </Link>
+            ))}
+          </div>
       </React.Fragment>
     );
   }
@@ -33,7 +41,7 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = {
   doLogIn,
-  getBoard
+  getBoard,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
