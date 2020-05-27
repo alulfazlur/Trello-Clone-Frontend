@@ -8,6 +8,21 @@ export const setActiveBoard = (boardId) => {
   };
 };
 
+export const getActiveBoard = (activerBoardId) => {
+  return async (dispatch) => {
+    await axios
+      .get(baseUrl + "/board", {
+        params: { id: activerBoardId },
+      })
+      .then(async (response) => {
+        dispatch({ type: "SUCCESS_GET_ACTIVE_BOARD", payload: response.data });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
 export const getBoard = () => {
   const tokenUser = localStorage.getItem("token");
   return async (dispatch) => {

@@ -65,12 +65,12 @@ const TrelloList = (props) => {
     setAnchorEl(null);
   };
   const menuId = "primary-search-account-menu";
-  const options = [
-    'Show some love to Material-UI',
-    'Show all notification content',
-    'Hide sensitive notification content',
-    'Hide all notification content',
-  ];
+  // const options = [
+  //   'Show some love to Material-UI',
+  //   'Show all notification content',
+  //   'Hide sensitive notification content',
+  //   'Hide all notification content',
+  // ];
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
@@ -133,13 +133,17 @@ const TrelloList = (props) => {
                 <TrelloCard
                   className="trello-card"
                   key={el.id}
-                  text={el.text}
                   cardId={el.id}
-                  index={index}
                   listId={props.listId}
+                  text={el.text}
+                  order={el.order}
+                  description={el.description}
+                  members={el.members}
+                  index={index}
                   renameCard = {props.renameCard}
                   changeInputCard = {props.changeInputCard}
                   propCard = {props.propCard}
+                  listTitle={props.title}
                 />
               ))}
               {provided.placeholder}

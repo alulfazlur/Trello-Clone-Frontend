@@ -17,24 +17,24 @@ import {
   changeInputList,
   renameList,
 } from "../store/actions/listsAction";
-import { setActiveBoard } from "../store/actions/boardAction";
+import { getActiveBoard } from "../store/actions/boardAction";
 import {
   stopLoading,
   reorderCard,
   renameCard,
-  changeInputCard
+  changeInputCard,
 } from "../store/actions/cardAction";
 
 class Board extends Component {
   componentDidMount = async () => {
     const { boardId } = this.props.match.params;
-    await this.props.getList(boardId);
-    this.props.setActiveBoard(boardId);
+    this.props.getActiveBoard(boardId);
+    this.props.getList(boardId);
     // console.warn("checking props", this.props);
   };
 
   componentDidUpdate = async () => {
-    const boardId = this.props.board.activerBoardId;
+    const boardId = this.props.board.activeBoardId;
     if (this.props.isLoadingList || this.props.isLoadingCard) {
       await this.props.stopLoading();
       this.props.getList(boardId);
@@ -64,11 +64,12 @@ class Board extends Component {
 
   render() {
     const lists = this.props.lists;
+    const activeBoard = this.props.activeBoard
     return (
       <React.Fragment>
         <Header />
         <div style={{ paddingTop: "50px" }}>
-          <BoardHeader />
+          <BoardHeader boardTitle={activeBoard.title} />
         </div>
         <DragDropContext onDragEnd={this.onDragEnd}>
           <div style={{ marginTop: "50px" }}>
@@ -91,12 +92,16 @@ class Board extends Component {
                         listId={el.id}
                         title={el.title}
                         cards={el.cards}
-                        propList = {this.props.propList}
-                        propCard = {this.props.propCard}
-                        renameList = {(listId, title) => this.props.renameList(listId, title)}
-                        changeInputList = {(e) => this.props.changeInputList(e)}
-                        renameCard = {(id, listId, text) => this.props.renameCard(id, listId, text)}
-                        changeInputCard = {(e) => this.props.changeInputCard(e)}
+                        propList={this.props.propList}
+                        propCard={this.props.propCard}
+                        renameList={(listId, title) =>
+                          this.props.renameList(listId, title)
+                        }
+                        changeInputList={(e) => this.props.changeInputList(e)}
+                        renameCard={(id, listId, text) =>
+                          this.props.renameCard(id, listId, text)
+                        }
+                        changeInputCard={(e) => this.props.changeInputCard(e)}
                       />
                     );
                   })}
@@ -113,6 +118,7 @@ class Board extends Component {
 }
 const mapStateToProps = (state) => {
   return {
+    activeBoard: state.board.activeBoard,
     board: state.board,
     propCard: state.cards,
     propList: state.lists,
@@ -129,11 +135,11 @@ const mapDispatchToProps = {
   createList,
   renameList,
   changeInputList,
-  setActiveBoard,
+  getActiveBoard,
   stopLoading,
   reorderCard,
   renameCard,
-  changeInputCard
+  changeInputCard,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Board);

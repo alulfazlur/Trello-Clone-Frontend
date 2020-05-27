@@ -19,7 +19,7 @@ import NotificationsOutlinedIcon from '@material-ui/icons/NotificationsOutlined'
 import AccountCircle from "@material-ui/icons/AccountCircle";
 
 import SearchIcon from "@material-ui/icons/Search";
-import MoreIcon from "@material-ui/icons/MoreVert";
+// import MoreIcon from "@material-ui/icons/MoreVert";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -95,17 +95,17 @@ const Header = (props) => {
   };
   const handleMenuClose = () => {
     setAnchorEl(null);
-    handleMobileMenuClose();
+    // handleMobileMenuClose();
   };
   
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-  const handleMobileMenuClose = () => {
-    setMobileMoreAnchorEl(null);
-  };
-  const handleMobileMenuOpen = (event) => {
-    setMobileMoreAnchorEl(event.currentTarget);
-  };
+  // const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  // const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  // const handleMobileMenuClose = () => {
+  //   setMobileMoreAnchorEl(null);
+  // };
+  // const handleMobileMenuOpen = (event) => {
+  //   setMobileMoreAnchorEl(event.currentTarget);
+  // };
 
   const menuId = "primary-search-account-menu";
   const renderMenu = (
@@ -135,7 +135,7 @@ const Header = (props) => {
           </IconButton>
           <IconButton color="inherit">
             <DashboardOutlinedIcon style={{marginRight:"5px"}}/>
-            <Typography variant="h7" className={classes.title} style={{fontWeight:"bolder"}}>
+            <Typography variant="body1" className={classes.title} style={{fontWeight:"bolder"}}>
             Boards
           </Typography>
           </IconButton>
@@ -176,7 +176,7 @@ const Header = (props) => {
               <AccountCircle />
             </IconButton>
           </div>
-          <div className={classes.sectionMobile}>
+          {/* <div className={classes.sectionMobile}>
             <IconButton
               aria-label="show more"
               aria-haspopup="true"
@@ -185,7 +185,7 @@ const Header = (props) => {
             >
               <MoreIcon />
             </IconButton>
-          </div>
+          </div> */}
         </Toolbar>
       </AppBar>
       {renderMenu}

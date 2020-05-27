@@ -1,5 +1,6 @@
 body{
     background-color: #5aac44;
+    /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !important */
 }
 html {
     -webkit-box-sizing: border-box;
@@ -178,4 +179,70 @@ html {
     border-radius: 3px;
     border: rgba(47, 47, 255, 0.65) 3px solid;
     width: 100%;
+}
+
+.card-modal .MuiIconButton-root{
+    border-radius: 50% !important;
+}
+.add-button-desc{
+    padding: 15px 0 0 10px;
+    cursor: pointer;
+    border-radius: 3px;
+    height: 60px;
+    width: 100%;
+    background-color: rgba(9,30,66,.04);
+}
+.add-button-desc:hover, .details-button:hover {
+    background-color: rgba(9, 30, 66, 0.123);
+}
+
+.details-button{
+    top : 0px;
+    cursor: pointer;
+    border-radius: 3px;
+    padding-top: 5px;
+    width: 100%;
+    height: 25px !important;
+    background-color: rgba(9,30,66,.04);
+}
+.comment-box{
+    padding: 10px 0 0 10px;
+    width: 100%;
+    cursor: pointer;
+    color: rgb(201, 201, 201);
+    background-color: white;
+    height: 30px;
+    -webkit-box-shadow: 1px -1px 5px -1px rgba(209,209,209,1);
+    -moz-box-shadow: 1px -1px 5px -1px rgba(209,209,209,1);
+    box-shadow: 1px -1px 5px -1px rgba(209,209,209,1);
+}
+.comment-box:hover{
+    -webkit-box-shadow: 1px -1px 5px -1px rgb(161, 161, 161);
+    -moz-box-shadow: 1px -1px 5px -1px rgb(161, 161, 161);
+    box-shadow: 1px -1px 5px -1px rgb(161, 161, 161);
+}
+.right-modal h3{
+    color: #5e6c84;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: -4px;
+    line-height: 20px
+}
+.right-modal .MuiIconButton-root{
+    margin-top: 10px !important;
+    background-color: rgba(9,30,66,.04) !important;
+    justify-content: left;
+    width: 100% !important;
+    border-radius: 3px !important;
+    color: #172b4d !important;
+    font-size: 14px !important;
+    line-height: 20px !important;
+    font-weight: 400 !important;
+}
+.right-modal .MuiIconButton-root:hover{
+    background-color: rgba(9, 30, 66, 0.123) !important;
+}
+.right-modal .MuiTypography-root{
+    font-size: 13px !important;
 }

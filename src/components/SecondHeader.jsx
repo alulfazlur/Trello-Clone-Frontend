@@ -13,8 +13,8 @@ import PublicOutlinedIcon from "@material-ui/icons/PublicOutlined";
 
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-import FreeBreakfastIcon from '@material-ui/icons/FreeBreakfast';
-import MoreIcon from "@material-ui/icons/MoreVert";
+import FreeBreakfastIcon from "@material-ui/icons/FreeBreakfast";
+// import MoreIcon from "@material-ui/icons/MoreVert";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -82,27 +82,27 @@ const useStyles = makeStyles((theme) => ({
 const BoardHeader = (props) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  // const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
   const isMenuOpen = Boolean(anchorEl);
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  // const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleMobileMenuClose = () => {
-    setMobileMoreAnchorEl(null);
-  };
-
   const handleMenuClose = () => {
     setAnchorEl(null);
-    handleMobileMenuClose();
+    // handleMobileMenuClose();
   };
+  
+  // const handleMobileMenuClose = () => {
+  //   setMobileMoreAnchorEl(null);
+  // };
 
-  const handleMobileMenuOpen = (event) => {
-    setMobileMoreAnchorEl(event.currentTarget);
-  };
+  // const handleMobileMenuOpen = (event) => {
+  //   setMobileMoreAnchorEl(event.currentTarget);
+  // };
 
   const menuId = "primary-search-account-menu";
   const renderMenu = (
@@ -141,7 +141,7 @@ const BoardHeader = (props) => {
               marginRight: "20px",
             }}
           >
-            News
+            {props.boardTitle}
           </Typography>
           <IconButton color="inherit">
             <StarBorderOutlinedIcon />
@@ -149,7 +149,7 @@ const BoardHeader = (props) => {
           <span className="divider"></span>
           <IconButton color="inherit" style={{ height: "35px" }}>
             <Typography
-              variant="h7"
+              variant="body1"
               className={classes.title}
               style={{ padding: "0 5px" }}
             >
@@ -160,7 +160,7 @@ const BoardHeader = (props) => {
           <IconButton color="inherit" style={{ height: "35px" }}>
             <PublicOutlinedIcon style={{ fontSize: "15px" }} />
             <Typography
-              variant="h7"
+              variant="body1"
               className={classes.title}
               style={{ padding: "0 5px" }}
             >
@@ -179,7 +179,7 @@ const BoardHeader = (props) => {
           </IconButton>
           <IconButton color="inherit" style={{ height: "35px" }}>
             <Typography
-              variant="h7"
+              variant="body1"
               className={classes.title}
               style={{ padding: "0 5px" }}
             >
@@ -191,7 +191,7 @@ const BoardHeader = (props) => {
             <IconButton color="inherit" style={{ height: "35px" }}>
               <FreeBreakfastIcon style={{ fontSize: "15px" }} />
               <Typography
-                variant="h7"
+                variant="body1"
                 className={classes.title}
                 style={{ padding: "0 5px" }}
               >
@@ -201,7 +201,7 @@ const BoardHeader = (props) => {
             <IconButton color="inherit" style={{ height: "35px" }}>
               <MoreHorizIcon style={{ fontSize: "15px" }} />
               <Typography
-                variant="h7"
+                variant="body1"
                 className={classes.title}
                 style={{ padding: "0 5px" }}
               >
@@ -209,7 +209,7 @@ const BoardHeader = (props) => {
               </Typography>
             </IconButton>
           </div>
-          <div className={classes.sectionMobile}>
+          {/* <div className={classes.sectionMobile}>
             <IconButton
               aria-label="show more"
               aria-haspopup="true"
@@ -218,11 +218,11 @@ const BoardHeader = (props) => {
             >
               <MoreIcon />
             </IconButton>
-          </div>
+          </div> */}
         </Toolbar>
       </AppBar>
       {renderMenu}
     </div>
   );
-}
+};
 export default BoardHeader;

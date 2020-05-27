@@ -1,5 +1,6 @@
 const initialState = {
-  boardList:[]
+  boardList:[],
+  activeBoard:{}
 };
 
 const boardReducer = (boardState = initialState, action) => {
@@ -14,6 +15,12 @@ const boardReducer = (boardState = initialState, action) => {
       return {
         ...boardState,
         boardList: action.payload,
+      };
+    }
+    case "SUCCESS_GET_ACTIVE_BOARD": {
+      return {
+        ...boardState,
+        activeBoard: action.payload,
       };
     }
     default:

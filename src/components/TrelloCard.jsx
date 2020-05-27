@@ -14,18 +14,15 @@ import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import { useSpring, animated } from "react-spring/web.cjs";
 
+import CardModal from "./CardModal"
+
 const useStyles = makeStyles((theme) => ({
   modal: {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-  },
-  paper: {
-    backgroundColor: theme.palette.background.paper,
-    border: "2px solid #000",
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
+    overflow:"scroll",
+  }
 }));
 
 const Fade = forwardRef(function Fade(props, ref) {
@@ -153,8 +150,8 @@ const TrelloCard = (props) => {
                 </CardContent>
               </Card>
               <Modal
-                aria-labelledby="spring-modal-title"
-                aria-describedby="spring-modal-description"
+                aria-labelledby="modal-title"
+                aria-describedby="modal-description"
                 className={classes.modal}
                 open={open}
                 onClose={handleClose}
@@ -165,12 +162,16 @@ const TrelloCard = (props) => {
                 }}
               >
                 <Fade in={open}>
-                  <div className={classes.paper}>
-                    <h2 id="spring-modal-title">Spring modal</h2>
-                    <p id="spring-modal-description">
-                      react-spring animates me.
-                    </p>
-                  </div>
+                  <CardModal
+                  cardId={props.id}
+                  listId={props.listId}
+                  text={props.text}
+                  order={props.order}
+                  description={props.description}
+                  members={props.members}
+                  listTitle={props.listTitle}
+                  handleClose={handleClose}
+                  />
                 </Fade>
               </Modal>
             </React.Fragment>
