@@ -3,13 +3,13 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
 import { doLogIn } from "../store/actions/userAction";
-import { getBoard } from "../store/actions/boardAction";
+import { getBoardList } from "../store/actions/boardAction";
 
 import Header from "../components/Header";
 class Home extends Component {
   componentDidMount = async () => {
     await this.props.doLogIn();
-    this.props.getBoard();
+    this.props.getBoardList();
     console.warn("checking props", this.props);
   };
 
@@ -41,7 +41,7 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = {
   doLogIn,
-  getBoard,
+  getBoardList,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

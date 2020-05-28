@@ -42,12 +42,44 @@ export const createCard = (listId, text) => {
   };
 };
 
-export const reorderCard = (id, listId, order) => {
+export const reorderCard = (code, listCode, order) => {
   return async (dispatch) => {
     const bodyRequest = {
-      id: id,
-      listId: listId,
+      code: code,
+      listCode: listCode,
       order: order,
+    };
+    const myJSON = JSON.stringify(bodyRequest);
+    console.warn("myJSON Body Req", myJSON);
+    const token = localStorage.getItem("token");
+    await axios
+      .put(baseUrl + "/card/reorder", myJSON, {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Accept: "application/json; charset=utf-8",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(() => {
+        dispatch({ type: "SUCCESS_REORDER_CARD" });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+export const chooseOrder = (e) => {
+  return {
+    type: "SUCCESS_GET_CHOSEN_ORDER",
+    payload: e,
+  };
+};
+export const moveCard = (id) => {
+  return async (dispatch, getState) => {
+    const bodyRequest = {
+      id: id,
+      listId: getState().lists.chosenListId,
+      order: getState().cards.chosenOrder,
     };
     const myJSON = JSON.stringify(bodyRequest);
     console.warn("myJSON Body Req", myJSON);
@@ -61,7 +93,7 @@ export const reorderCard = (id, listId, order) => {
         },
       })
       .then(() => {
-        dispatch({ type: "SUCCESS_REORDER_CARD" });
+        dispatch({ type: "SUCCESS_MOVE_CARD" });
       })
       .catch((error) => {
         console.log(error);
@@ -115,3 +147,5 @@ export const changeInputCard = (e) => {
     payload: e,
   };
 };
+
+

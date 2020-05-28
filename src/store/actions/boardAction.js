@@ -1,5 +1,5 @@
 import axios from "axios";
-const baseUrl = process.env.REACT_APP_PUBLIC_URL
+const baseUrl = process.env.REACT_APP_PUBLIC_URL;
 
 export const setActiveBoard = (boardId) => {
   return {
@@ -23,7 +23,7 @@ export const getActiveBoard = (activerBoardId) => {
   };
 };
 
-export const getBoard = () => {
+export const getBoardList = () => {
   const tokenUser = localStorage.getItem("token");
   return async (dispatch) => {
     await axios({
@@ -33,10 +33,40 @@ export const getBoard = () => {
     })
       .then(async (response) => {
         dispatch({ type: "SUCCESS_GET_BOARD", payload: response.data });
-        console.warn("getBoard", response.data)
+        console.warn("getBoard", response.data);
       })
       .catch((error) => {
         console.log(error);
       });
+  };
+};
+
+export const changeInputBoard = (e) => {
+  return {
+    type: "CHANGE_CHOSEN_BOARD_ID",
+    payload: e,
+  };
+};
+
+export const getChosenBoard = () => {
+  return async (dispatch, getState) => {
+    let id = getState().board.chosenBoardId
+      ? getState().board.chosenBoardId
+      : getState().board.activeBoardId;
+    await axios
+      .get(baseUrl + "/board", {
+        params: { id: id },
+      })
+      .then(async (response) => {
+        dispatch({ type: "SUCCESS_GET_CHOSEN_BOARD", payload: response.data });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+export const stopLoadingBoard = () => {
+  return {
+    type: "STOP_LOADING",
   };
 };

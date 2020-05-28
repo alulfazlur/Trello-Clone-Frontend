@@ -11,10 +11,18 @@
 const initialState = {
   cardList: [],
   isLoading: false,
+  chosenOrder : ""
 };
 
 export default function cardReducer(cardState = initialState, action) {
   switch (action.type) {
+    case "SUCCESS_GET_CHOSEN_ORDER": {
+      return {
+        ...cardState,
+        chosenOrder: action.payload.target.value,
+        isLoading: false,
+      };
+    }
     case "STOP_LOADING":
       return {
         ...cardState,
@@ -35,6 +43,11 @@ export default function cardReducer(cardState = initialState, action) {
       return {
         ...cardState,
         // isLoading: true,
+      };
+      case "SUCCESS_MOVE_CARD":
+      return {
+        ...cardState,
+        isLoading: true,
       };
       case "SUCCESS_RENAME_CARD":
         return {

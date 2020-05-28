@@ -3,13 +3,7 @@ import { connect } from "react-redux";
 
 import { Icon, Button, Card } from "@material-ui/core";
 import TextArea from "react-textarea-autosize";
-
-import {
-  addList,
-  addCard,
-  changeInputList,
-  createList,
-} from "../store/actions/listsAction";
+import { changeInputList, createList } from "../store/actions/listsAction";
 import { createCard } from "../store/actions/cardAction";
 
 class AddButton extends Component {
@@ -26,7 +20,7 @@ class AddButton extends Component {
     this.setState({ formOpen: true });
   };
 
-  closeForm = (e) => {
+  closeForm = () => {
     this.setState({ formOpen: false });
   };
 
@@ -49,8 +43,12 @@ class AddButton extends Component {
 
   handleKeyPress = (event) => {
     const submit = this.props.list ? this.handleAddList : this.handleAddCard;
+    const close = this.closeForm;
     if (event.key === "Enter" && event.shiftKey) {
       submit();
+    }
+    if (event.key === "Escape") {
+      close();
     }
   };
 
@@ -86,31 +84,75 @@ class AddButton extends Component {
     const buttonTitle = this.props.list ? "Add List" : "Add Card";
 
     return (
-      <div>
-        <Card className="card-form">
-          <TextArea
-            className="add-form"
-            placeholder={placeHolder}
-            autoFocus
-            onBlur={this.closeForm}
-            name="newTitle"
-            onChange={(e) => this.props.changeInputList(e)}
-            onKeyPress={this.handleKeyPress}
-          />
-        </Card>
-        <div className="action-form-group">
-          <Button
-            className="button-form"
-            variant="contained"
-            onMouseDown={
-              this.props.list ? this.handleAddList : this.handleAddCard
-            }
-          >
-            {buttonTitle}{" "}
-          </Button>
-          <Icon className="close-form">close</Icon>
-        </div>
-      </div>
+      <React.Fragment>
+        {this.props.list ? (
+          <div className="list-divider">
+            <div className="board-lists">
+              <div>
+                <Card className="card-form-title" style={{ minWidth: "240px" }}>
+                  <TextArea
+                    className="input-form"
+                    placeholder={placeHolder}
+                    autoFocus
+                    onBlur={this.closeForm}
+                    name="newTitle"
+                    onChange={(e) => this.props.changeInputList(e)}
+                    onKeyPress={this.handleKeyPress}
+                    style={{
+                      minHeight: "18px",
+                      paddingTop: "10px",
+                    }}
+                  />
+                </Card>
+              </div>
+              <div>
+                <div className="action-form-group">
+                  <Button
+                    className="button-form"
+                    variant="contained"
+                    onMouseDown={
+                      this.props.list ? this.handleAddList : this.handleAddCard
+                    }
+                  >
+                    {buttonTitle}{" "}
+                  </Button>
+                  <Icon className="close-form" onClick={this.closeForm}>
+                    close
+                  </Icon>
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div>
+            <Card className="card-form">
+              <TextArea
+                className="add-form"
+                placeholder={placeHolder}
+                autoFocus
+                onBlur={this.closeForm}
+                name="newTitle"
+                onChange={(e) => this.props.changeInputList(e)}
+                onKeyPress={this.handleKeyPress}
+              />
+            </Card>
+            <div className="action-form-group">
+              <Button
+                className="button-form"
+                variant="contained"
+                onMouseDown={
+                  this.props.list ? this.handleAddList : this.handleAddCard
+                }
+              >
+                {buttonTitle}{" "}
+              </Button>
+              <Icon className="close-form" onClick={this.closeForm}>
+                close
+              </Icon>
+            </div>
+          </div>
+        )}
+      </React.Fragment>
     );
   };
 
@@ -132,8 +174,6 @@ const mapStateToProps = (state) => {
   };
 };
 const mapDispatchToProps = {
-  addList,
-  addCard,
   changeInputList,
   createList,
   createCard,

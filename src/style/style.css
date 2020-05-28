@@ -162,19 +162,19 @@ html {
 
 .input-form{
     width: 100%;
+    height: 13px;
   border: none;
   outline-color: blue;
   border-radius: 3px;
-  margin-bottom: 3px;
-  padding: 5px;
+  resize: none;
 }
 
 .card-form-title{
     overflow: visible;
-    min-height: 10px;
+    min-height: 8px;
     min-width: 200px;
     max-width: 200px;
-    padding: 6px 8px 2px;
+    padding: 0px 8px 2px;
     /* margin-bottom: 5px; */
     border-radius: 3px;
     border: rgba(47, 47, 255, 0.65) 3px solid;
@@ -201,7 +201,7 @@ html {
     cursor: pointer;
     border-radius: 3px;
     padding-top: 5px;
-    width: 100%;
+    width: 110%;
     height: 25px !important;
     background-color: rgba(9,30,66,.04);
 }
@@ -245,4 +245,56 @@ html {
 }
 .right-modal .MuiTypography-root{
     font-size: 13px !important;
+}
+.MuiList-padding{
+    padding: 0px !important;
+}
+.move-menu .MuiIconButton-root{
+    margin-top: 10px !important;
+    background-color: rgba(9,30,66,.04) !important;
+    justify-content: center !important;
+    width: 100% !important;
+    color: #172b4d !important;
+    font-size: 14px !important;
+    line-height: 20px !important;
+    font-weight: 400 !important;
+    text-align: left !important;
+}
+.move-menu .MuiIconButton-label{
+    justify-content: left !important;
+}
+.move-menu-title .MuiIconButton-root{
+    border-radius: 50% !important;
+}
+.move-menu .MuiIconButton-root:hover{
+    background-color: rgba(9, 30, 66, 0.123) !important;
+}
+.move-menu h4 {
+    color: #5e6c84;
+font-size: 12px;
+font-weight: 500;
+letter-spacing: .04em;
+line-height: 16px;
+margin-top: 16px;
+text-transform: uppercase;
+}
+.no-decoration .MuiIconButton-root{
+    cursor: inherit;
+    background-color: transparent !important;
+    height: 1px !important;
+}
+.no-decoration .MuiIconButton-root:hover{
+    background-color: transparent !important;
+}
+
+.move-button .MuiIconButton-root{
+    background-color: #5aac44 !important;
+    align-self: center !important;
+    color: white !important;
+}
+.move-button .MuiIconButton-root:hover{
+    background-color: #60bb46 !important;
+}
+.move-button .MuiIconButton-label{
+    justify-content: center !important;
 }

@@ -4,7 +4,6 @@ import SubjectIcon from "@material-ui/icons/Subject";
 import TocIcon from "@material-ui/icons/Toc";
 import CloseIcon from "@material-ui/icons/Close";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-import TextArea from "react-textarea-autosize";
 
 // Add to Card
 import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
@@ -29,11 +28,14 @@ import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 
+import Menu from "@material-ui/core/Menu";
+import MoveMenu from "./MoveCardMenu";
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     width: "768px",
     height: "600px",
-    overflow:"scroll",
+    overflow: "scroll",
     flexGrow: 1,
     backgroundColor: "#f4f5f7",
     boxShadow: theme.shadows[5],
@@ -44,6 +46,47 @@ const useStyles = makeStyles((theme) => ({
 
 const CardModal = (props) => {
   const classes = useStyles();
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const isMenuOpen = Boolean(anchorEl);
+  const handleMoveMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const moveMenu = "move-menu";
+  const renderMenu = (
+    <Menu
+      anchorEl={anchorEl}
+      anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      id={moveMenu}
+      keepMounted
+      transformOrigin={{ vertical: "bottom", horizontal: "left" }}
+      open={isMenuOpen}
+      onClose={handleMenuClose}
+      style={{ padding: "0px" }}
+    >
+      <MoveMenu
+        cardId={props.cardId}
+        listId={props.listId}
+        text={props.text}
+        order={props.order}
+        description={props.description}
+        members={props.members}
+        listTitle={props.listTitle}
+        boardList={props.boardList}
+        boardTitle={props.boardTitle}
+        changeInputBoard={props.changeInputBoard}
+        chosenBoard={props.chosenBoard}
+        chooseListId={props.chooseListId}
+        chosenList={props.chosenList}
+        chosenOrder={props.chosenOrder}
+        chooseOrder={props.chooseOrder}
+        moveCard={props.moveCard}
+      />
+    </Menu>
+  );
 
   return (
     <div className="card-modal">
@@ -173,92 +216,101 @@ const CardModal = (props) => {
           </Grid>
           {/* Kanan */}
           <Grid item xs={3} className="right-modal">
-              <h3>add to card</h3>
-              <IconButton color="inherit" style={{ height: "35px" }}>
-                <PersonOutlineIcon style={{ fontSize: "15px" }} />
-                <Typography variant="body1" style={{ padding: "0 5px" }}>
-                  Members
-                </Typography>
-              </IconButton>
-              <IconButton color="inherit" style={{ height: "35px" }}>
-                <LabelOutlinedIcon style={{ fontSize: "15px" }} />
-                <Typography variant="body1" style={{ padding: "0 5px" }}>
-                  Labels
-                </Typography>
-              </IconButton>
-              <IconButton color="inherit" style={{ height: "35px" }}>
-                <CheckBoxOutlinedIcon style={{ fontSize: "15px" }} />
-                <Typography variant="body1" style={{ padding: "0 5px" }}>
-                  Checklist
-                </Typography>
-              </IconButton>
-              <IconButton color="inherit" style={{ height: "35px" }}>
-                <AccessTimeOutlinedIcon style={{ fontSize: "15px" }} />
-                <Typography variant="body1" style={{ padding: "0 5px" }}>
-                  Due Date
-                </Typography>
-              </IconButton>
-              <IconButton color="inherit" style={{ height: "35px" }}>
-                <AttachFileIcon style={{ fontSize: "15px" }} />
-                <Typography variant="body1" style={{ padding: "0 5px" }}>
-                  Attachment
-                </Typography>
-              </IconButton>
-              <IconButton color="inherit" style={{ height: "35px" }}>
-                <VideoLabelIcon style={{ fontSize: "15px" }} />
-                <Typography variant="body1" style={{ padding: "0 5px" }}>
-                  Cover
-                </Typography>
-              </IconButton>
+            <h3>add to card</h3>
+            <IconButton color="inherit" style={{ height: "35px" }}>
+              <PersonOutlineIcon style={{ fontSize: "15px" }} />
+              <Typography variant="body1" style={{ padding: "0 5px" }}>
+                Members
+              </Typography>
+            </IconButton>
+            <IconButton color="inherit" style={{ height: "35px" }}>
+              <LabelOutlinedIcon style={{ fontSize: "15px" }} />
+              <Typography variant="body1" style={{ padding: "0 5px" }}>
+                Labels
+              </Typography>
+            </IconButton>
+            <IconButton color="inherit" style={{ height: "35px" }}>
+              <CheckBoxOutlinedIcon style={{ fontSize: "15px" }} />
+              <Typography variant="body1" style={{ padding: "0 5px" }}>
+                Checklist
+              </Typography>
+            </IconButton>
+            <IconButton color="inherit" style={{ height: "35px" }}>
+              <AccessTimeOutlinedIcon style={{ fontSize: "15px" }} />
+              <Typography variant="body1" style={{ padding: "0 5px" }}>
+                Due Date
+              </Typography>
+            </IconButton>
+            <IconButton color="inherit" style={{ height: "35px" }}>
+              <AttachFileIcon style={{ fontSize: "15px" }} />
+              <Typography variant="body1" style={{ padding: "0 5px" }}>
+                Attachment
+              </Typography>
+            </IconButton>
+            <IconButton color="inherit" style={{ height: "35px" }}>
+              <VideoLabelIcon style={{ fontSize: "15px" }} />
+              <Typography variant="body1" style={{ padding: "0 5px" }}>
+                Cover
+              </Typography>
+            </IconButton>
 
-              <h3 style={{paddingTop:"15px"}}>power-ups</h3>
-              <IconButton color="inherit" style={{ height: "35px", justifyContent: "center"}}>
-                <Typography variant="body1" style={{ padding: "0 5px"}}>
-                  Get Power-Ups
-                </Typography>
-              </IconButton>
+            <h3 style={{ paddingTop: "15px" }}>power-ups</h3>
+            <IconButton
+              color="inherit"
+              style={{ height: "35px", justifyContent: "center" }}
+            >
+              <Typography variant="body1" style={{ padding: "0 5px" }}>
+                Get Power-Ups
+              </Typography>
+            </IconButton>
 
-              <h3 style={{paddingTop:"15px"}}>actions</h3>
-              <IconButton color="inherit" style={{ height: "35px" }}>
-                <ArrowForwardIcon style={{ fontSize: "15px" }} />
-                <Typography variant="body1" style={{ padding: "0 5px" }}>
-                  Move
-                </Typography>
-              </IconButton>
-              <IconButton color="inherit" style={{ height: "35px" }}>
-                <FileCopyOutlinedIcon style={{ fontSize: "15px" }} />
-                <Typography variant="body1" style={{ padding: "0 5px" }}>
-                  Copy
-                </Typography>
-              </IconButton>
-              <IconButton color="inherit" style={{ height: "35px" }}>
-                <DashboardOutlinedIcon style={{ fontSize: "15px" }} />
-                <Typography variant="body1" style={{ padding: "0 5px" }}>
-                  Make Template
-                </Typography>
-              </IconButton>
-              <IconButton color="inherit" style={{ height: "35px" }}>
-                <VisibilityOutlinedIcon style={{ fontSize: "15px" }} />
-                <Typography variant="body1" style={{ padding: "0 5px" }}>
-                  Watch
-                </Typography>
-              </IconButton>
-              <hr style={{width:"90%", opacity:"15%"}}/>
-              <IconButton color="inherit" style={{ height: "35px" }}>
-                <ArchiveOutlinedIcon style={{ fontSize: "15px" }} />
-                <Typography variant="body1" style={{ padding: "0 5px" }}>
-                  Archive
-                </Typography>
-              </IconButton>
-              <IconButton color="inherit" style={{ height: "35px" }}>
-                <ShareOutlinedIcon style={{ fontSize: "15px" }} />
-                <Typography variant="body1" style={{ padding: "0 5px" }}>
-                  Share
-                </Typography>
-              </IconButton>
+            <h3 style={{ paddingTop: "15px" }}>actions</h3>
+            <IconButton
+              color="inherit"
+              style={{ height: "35px" }}
+              aria-controls={moveMenu}
+              onClick={handleMoveMenuOpen}
+            >
+              <ArrowForwardIcon style={{ fontSize: "15px" }} />
+              <Typography variant="body1" style={{ padding: "0 5px" }}>
+                Move
+              </Typography>
+            </IconButton>
+            <IconButton color="inherit" style={{ height: "35px" }}>
+              <FileCopyOutlinedIcon style={{ fontSize: "15px" }} />
+              <Typography variant="body1" style={{ padding: "0 5px" }}>
+                Copy
+              </Typography>
+            </IconButton>
+            <IconButton color="inherit" style={{ height: "35px" }}>
+              <DashboardOutlinedIcon style={{ fontSize: "15px" }} />
+              <Typography variant="body1" style={{ padding: "0 5px" }}>
+                Make Template
+              </Typography>
+            </IconButton>
+            <IconButton color="inherit" style={{ height: "35px" }}>
+              <VisibilityOutlinedIcon style={{ fontSize: "15px" }} />
+              <Typography variant="body1" style={{ padding: "0 5px" }}>
+                Watch
+              </Typography>
+            </IconButton>
+            <hr style={{ width: "100%", opacity: "15%", marginTop: "15px" }} />
+            <IconButton color="inherit" style={{ height: "35px" }}>
+              <ArchiveOutlinedIcon style={{ fontSize: "15px" }} />
+              <Typography variant="body1" style={{ padding: "0 5px" }}>
+                Archive
+              </Typography>
+            </IconButton>
+            <IconButton color="inherit" style={{ height: "35px" }}>
+              <ShareOutlinedIcon style={{ fontSize: "15px" }} />
+              <Typography variant="body1" style={{ padding: "0 5px" }}>
+                Share
+              </Typography>
+            </IconButton>
           </Grid>
         </Grid>
       </Paper>
+      {renderMenu}
     </div>
   );
 };

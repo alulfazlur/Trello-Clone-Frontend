@@ -76,22 +76,6 @@ export const renameList = (listId, title) => {
   };
 };
 
-export const addList = (title) => {
-  return (dispatch, getState) => {
-    dispatch({
-      type: "SUCCESS_ADD_LIST",
-      payload: title
-    });
-  };
-};
-
-export const addCard = (listId, text) => {
-  return {
-    type: "SUCCESS_ADD_CARD",
-    payload: { listId, text },
-  };
-};
-
 export const editTitle = (listId, newTitle) => {
   return {
     type: "SUCCESS_EDIT_LIST",
@@ -99,6 +83,33 @@ export const editTitle = (listId, newTitle) => {
       listId,
       newTitle
     }
+  };
+};
+
+export const reorderList = (code, boardId, order) => {
+  return async (dispatch) => {
+    const bodyRequest = {
+      code: code,
+      boardId: boardId,
+      order: order,
+    };
+    const myJSON = JSON.stringify(bodyRequest);
+    console.warn("myJSON Body Req", myJSON);
+    const token = localStorage.getItem("token");
+    await axios
+      .put(baseUrl + "/list/reorder", myJSON, {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Accept: "application/json; charset=utf-8",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(() => {
+        dispatch({ type: "SUCCESS_REORDER_LIST" });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 };
 
@@ -129,5 +140,34 @@ export const sortOnDrag = (
       draggableId,
       type
     },
+  };
+};
+
+export const chooseListId = (e) => {
+  return {
+    type: "CHANGE_CHOSEN_LIST_ID",
+    payload: e,
+  };
+};
+
+export const getChosenList = () => {
+  return async (dispatch, getState) => {
+    let id = getState().lists.chosenListId
+    await axios
+      .get(baseUrl + "/list", {
+        params: { id: id },
+      })
+      .then(async (response) => {
+        dispatch({ type: "SUCCESS_GET_CHOSEN_LIST", payload: response.data });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
+export const stopLoadingList = () => {
+  return {
+    type: "STOP_LOADING",
   };
 };

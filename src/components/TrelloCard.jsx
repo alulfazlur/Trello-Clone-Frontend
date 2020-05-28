@@ -14,15 +14,15 @@ import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import { useSpring, animated } from "react-spring/web.cjs";
 
-import CardModal from "./CardModal"
+import CardModal from "./CardModal";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    overflow:"scroll",
-  }
+    overflow: "scroll",
+  },
 }));
 
 const Fade = forwardRef(function Fade(props, ref) {
@@ -127,7 +127,7 @@ const TrelloCard = (props) => {
   };
 
   return (
-    <Draggable draggableId={String(props.cardId)} index={props.index}>
+    <Draggable draggableId={props.code} index={props.index}>
       {(provided) => (
         <div
           className="card-container"
@@ -141,7 +141,7 @@ const TrelloCard = (props) => {
             <React.Fragment>
               <Card className="card" onClick={handleOpen}>
                 <CardContent>
-                  <IconButton onClick={() => setIsEditingCard(true)}>
+                  <IconButton onMouseDown={() => setIsEditingCard(true)}>
                     <CreateOutlinedIcon
                       style={{ fontSize: 15, fontWeight: "bold" }}
                     />
@@ -157,22 +157,31 @@ const TrelloCard = (props) => {
                 onClose={handleClose}
                 closeAfterTransition
                 BackdropComponent={Backdrop}
-                BackdropProps={{
-                  timeout: 500,
-                }}
+                // BackdropProps={{
+                //   timeout: 500,
+                // }}
               >
-                <Fade in={open}>
-                  <CardModal
-                  cardId={props.id}
+                {/* <Fade in={open}> */}
+                <CardModal
+                  cardId={props.cardId}
                   listId={props.listId}
                   text={props.text}
                   order={props.order}
                   description={props.description}
                   members={props.members}
                   listTitle={props.listTitle}
+                  boardList={props.boardList}
                   handleClose={handleClose}
-                  />
-                </Fade>
+                  boardTitle={props.boardTitle}
+                  changeInputBoard={props.changeInputBoard}
+                  chosenBoard={props.chosenBoard}
+                  chooseListId={props.chooseListId}
+                  chosenList={props.chosenList}
+                  chosenOrder={props.chosenOrder}
+                  chooseOrder={props.chooseOrder}
+                  moveCard={props.moveCard}
+                />
+                {/* </Fade> */}
               </Modal>
             </React.Fragment>
           )}
