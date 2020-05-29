@@ -33,7 +33,7 @@ export const getBoardList = () => {
     })
       .then(async (response) => {
         dispatch({ type: "SUCCESS_GET_BOARD", payload: response.data });
-        console.warn("getBoard", response.data);
+        // console.warn("getBoard", response.data);
       })
       .catch((error) => {
         console.log(error);

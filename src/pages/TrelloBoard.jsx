@@ -143,6 +143,7 @@ class Board extends Component {
                         }
                         changeInputCard={(e) => this.props.changeInputCard(e)}
                         boardList={this.props.boardList}
+                        activeBoard={this.props.activeBoard}
                         boardTitle={this.props.activeBoard.title}
                         changeInputBoard={(e) => this.props.changeInputBoard(e)}
                         chosenBoard={this.props.chosenBoard}

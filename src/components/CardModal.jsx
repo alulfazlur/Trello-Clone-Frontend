@@ -69,21 +69,27 @@ const CardModal = (props) => {
     >
       <MoveMenu
         cardId={props.cardId}
-        listId={props.listId}
         text={props.text}
         order={props.order}
         description={props.description}
         members={props.members}
+
+        listId={props.listId}
         listTitle={props.listTitle}
         boardList={props.boardList}
+        
         boardTitle={props.boardTitle}
-        changeInputBoard={props.changeInputBoard}
-        chosenBoard={props.chosenBoard}
-        chooseListId={props.chooseListId}
+        activeBoard={props.activeBoard}
+        
         chosenList={props.chosenList}
         chosenOrder={props.chosenOrder}
+        chosenBoard={props.chosenBoard}
+        
+        changeInputBoard={props.changeInputBoard}
+        chooseListId={props.chooseListId}
         chooseOrder={props.chooseOrder}
         moveCard={props.moveCard}
+        handleMenuClose = {handleMenuClose}
       />
     </Menu>
   );

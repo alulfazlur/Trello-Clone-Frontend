@@ -11,7 +11,7 @@
 const initialState = {
   cardList: [],
   isLoading: false,
-  chosenOrder : ""
+  chosenOrder : "0"
 };
 
 export default function cardReducer(cardState = initialState, action) {

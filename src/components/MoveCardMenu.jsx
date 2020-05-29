@@ -6,10 +6,9 @@ import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 
-import ClickAwayListener from "@material-ui/core/ClickAwayListener";
-import MenuItem from "@material-ui/core/MenuItem";
-import MenuList from "@material-ui/core/MenuList";
-import Menu from "@material-ui/core/Menu";
+import InputLabel from "@material-ui/core/InputLabel";
+import FormControl from "@material-ui/core/FormControl";
+import NativeSelect from "@material-ui/core/NativeSelect";
 
 import StarBorderOutlinedIcon from "@material-ui/icons/StarBorderOutlined";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
@@ -20,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     width: "304px",
-    height: "350px",
+    height: "360px",
     backgroundColor: "#f4f5f7",
     boxShadow: theme.shadows[5],
     borderRadius: "3px",
@@ -30,85 +29,35 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const MoveMenu = (props) => {
-  console.warn("propsCardId", props.cardId)
   const classes = useStyles();
 
-  const [openBoard, setOpenBoard] = React.useState(false);
-  const [openList, setOpenList] = React.useState(false);
-  const [openOrder, setOpenOrder] = React.useState(false);
-  const boardRef = React.useRef(null);
-  const listRef = React.useRef(null);
-  const orderRef = React.useRef(null);
-
-  const handleToggleBoard = () => {
-    setOpenBoard((prevOpenBoard) => !prevOpenBoard);
-  };
-  const handleToggleList = () => {
-    setOpenList((prevOpenList) => !prevOpenList);
-  };
-  const handleToggleOrder = () => {
-    setOpenOrder((prevOpenOrder) => !prevOpenOrder);
-  };
-  const handleClickBoard = (event) => {
-    props.changeInputBoard(event);
-    setOpenBoard(false);
-  };
-  const handleClickList = (event) => {
-    props.chooseListId(event);
-    setOpenList(false);
-  };
-  const handleClickOrder = (event) => {
-    props.chooseOrder(event);
-    setOpenOrder(false);
-  };
-
-  const handleClickButtonMove = () => {
+  const handleClickButtonMove = (e) => {
     props.moveCard(props.cardId);
   };
-  const handleClose = (event) => {
-    if (boardRef.current && boardRef.current.contains(event.target)) {
-      return;
-    }
-    if (listRef.current && listRef.current.contains(event.target)) {
-      return;
-    }
-    if (orderRef.current && orderRef.current.contains(event.target)) {
-      return;
-    }
 
-    setOpenBoard(false);
-    setOpenList(false);
-    setOpenOrder(false);
-  };
+  const chosenBoard = props.boardList.filter((item) => {
+    if (item.id !== props.activeBoard.id) {
+      return item;
+    } else {
+      return false;
+    }
+  });
 
-  function handleListKeyDown(event) {
-    if (event.key === "Tab") {
-      event.preventDefault();
-      setOpenBoard(false);
-      setOpenList(false);
-      setOpenOrder(false);
+  const chosenList = props.chosenBoard.lists.filter((item) => {
+    if (item.id !== props.listId) {
+      return item;
+    } else {
+      return false;
     }
-  }
+  });
 
-  // return focus to the button when we transitioned from !open -> open
-  const prevOpenBoard = React.useRef(openBoard);
-  const prevOpenList = React.useRef(openList);
-  const prevOpenOrder = React.useRef(openOrder);
-  React.useEffect(() => {
-    if (prevOpenBoard.current === true && openBoard === false) {
-      boardRef.current.focus();
+  const chosenOrder = props.chosenList.cards.filter((item, index) => {
+    if (index !== props.order) {
+      return item;
+    } else {
+      return false;
     }
-    if (prevOpenList.current === true && openList === false) {
-      listRef.current.focus();
-    }
-    if (prevOpenOrder.current === true && openOrder === false) {
-      orderRef.current.focus();
-    }
-
-    prevOpenBoard.current = openBoard;
-    prevOpenList.current = openList;
-    prevOpenOrder.current = openOrder;
-  }, [openBoard, openList, openOrder]);
+  });
 
   return (
     <div className="move-menu">
@@ -131,7 +80,7 @@ const MoveMenu = (props) => {
               </Typography>
             </Grid>
             <Grid item xs={1}>
-              <IconButton onClick={props.handleClose}>
+              <IconButton onClick={props.handleMenuClose}>
                 <CloseIcon style={{ color: "gray", fontSize: "14px" }} />
               </IconButton>
             </Grid>
@@ -191,62 +140,126 @@ const MoveMenu = (props) => {
             </IconButton>
           </Grid>
 
-          <Grid item xs={12} style={{ padding: "0 10px" }}>
-            <IconButton
-              name="choseBoard"
-              color="inherit"
-              style={{ height: "50px" }}
-              ref={boardRef}
-              aria-controls={openBoard ? "menu-list-grow" : undefined}
-              aria-haspopup="true"
-              onClick={handleToggleBoard}
-            >
-              <Typography variant="body1">
-                <span style={{ fontSize: "12px", color: "gray" }}>Board</span>{" "}
-                <br />
-                Board
-              </Typography>
-            </IconButton>
+      {/* ===========================================BOARD===================================== */}
+          <Grid item xs={12} style={{ padding: "10px 10px" }}>
+          <FormControl className="menu-form-control">
+                <InputLabel
+                  htmlFor="board-choose"
+                  style={{ padding: "5px 0 0 6px" }}
+                >
+                  Board
+                </InputLabel>
+                <NativeSelect
+                  defaultValue={props.boardTitle}
+                  onChange={props.changeInputBoard}
+                  inputProps={{
+                    id: "board-choose",
+                    name: "chosenBoardId",
+                  }}
+                  style={{ textDecoration: "none" }}
+                  disableUnderline={true}
+                >
+                  <option aria-label="None" value={props.activeBoard.id} selected>
+                    {props.boardTitle}
+                  </option>
+                  {chosenBoard.map((el, index) => (
+                    <option key={el.id} value={el.id}>
+                      {el.title}
+                    </option>
+                  ))}
+                </NativeSelect>
+              </FormControl>
           </Grid>
 
-          <Grid item xs={12} style={{ padding: "0 10px" }} container>
+      {/* ===========================================LIST===================================== */}
+          <Grid item xs={12} style={{ padding: "10px 10px" }} container>
             <Grid item xs={8}>
-              <IconButton
-                name="choseList"
-                color="inherit"
-                style={{ height: "50px" }}
-                ref={listRef}
-                aria-controls={openList ? "menu-list-grow-list" : undefined}
-                aria-haspopup="true"
-                onClick={handleToggleList}
-              >
-                <Typography variant="body1">
-                  <span style={{ fontSize: "12px", color: "gray" }}>List</span>{" "}
-                  <br />
+              <FormControl className="menu-form-control">
+                <InputLabel
+                  htmlFor="order-choose"
+                  style={{ padding: "5px 0 0 6px" }}
+                >
                   List
-                  {/* {props.listTitle} */}
-                </Typography>
-              </IconButton>
+                </InputLabel>
+                <NativeSelect
+                  defaultValue={props.listTitle}
+                  onChange={props.chooseListId}
+                  inputProps={{
+                    id: "order-choose",
+                    name: "chosenOrder",
+                  }}
+                  style={{ textDecoration: "none" }}
+                  disableUnderline={true}
+                >
+                {chosenList.length !== 0 ? (
+                <React.Fragment>
+                {props.chosenBoard.id === props.activeBoard.id ? 
+                  (
+                <React.Fragment>
+                    <option aria-label="None" value={props.listId} selected>
+                    {props.listTitle}
+                  </option>
+                  {chosenList.map((el, index) => (
+                    <option key={el.id} value={el.id}>
+                      {el.title}
+                    </option>
+                  ))}
+                    </React.Fragment>
+                  ) : (
+                    <option aria-label="None" value={props.chosenBoard.lists[0].id} selected>
+                    {props.chosenBoard.lists[0].title}
+                  </option>
+                  )}
+                  </React.Fragment>
+                  ) : (
+                    <option aria-label="None" value="" selected>
+                   No Lists
+                  </option>
+                    )}
+                </NativeSelect>
+              </FormControl>
             </Grid>
-            <Grid item xs={4} style={{ paddingLeft: "5px" }}>
-              <IconButton
-                color="inherit"
-                style={{ height: "50px" }}
-                name="choseOrder"
-                ref={orderRef}
-                aria-controls={openOrder ? "menu-list-grow-order" : undefined}
-                aria-haspopup="true"
-                onClick={handleToggleOrder}
-              >
-                <Typography variant="body1">
-                  <span style={{ fontSize: "12px", color: "gray" }}>
-                    Position
-                  </span>{" "}
-                  <br />
-                  {/* {props.order} */}
-                  Order
-                </Typography>
-              </IconButton>
+      {/* ===========================================/LIST===================================== */}
+      {/* ===========================================ORDER===================================== */}
+            <Grid item xs={4} style={{ paddingLeft: "10px" }} >
+            <FormControl className="menu-form-control">
+                <InputLabel
+                  htmlFor="order-choose"
+                  style={{ padding: "5px 0 0 6px" }}
+                >
+                  List
+                </InputLabel>
+                <NativeSelect
+                  defaultValue={props.order}
+                  onChange={props.chooseOrder}
+                  inputProps={{
+                    id: "list-choose",
+                    name: "chosenListId",
+                  }}
+                  style={{ textDecoration: "none" }}
+                  disableUnderline={true}
+                >
+              {props.chosenList.cards.length !== 0 ? (
+                <React.Fragment>
+                  <option aria-label="None" value={props.order} selected>
+                    {parseInt(props.order) + 1}
+                  </option>
+                  {chosenOrder.map((el, index) => (
+                    <option key={el.id} value={el.order}>
+                      {el.order + 1}
+                    </option>
+                  ))}
+                  <option aria-label="None" value={props.chosenList.cards.length} selected>
+                    {props.chosenList.cards.length + 1}
+                  </option>
+                  </React.Fragment>
+                  ) : (
+                    <option aria-label="None" value="0" selected>
+                   1
+                  </option>
+                    )}
+                </NativeSelect>
+              </FormControl>
             </Grid>
           </Grid>
 
@@ -255,11 +268,15 @@ const MoveMenu = (props) => {
             xs={5}
             style={{
               padding: "0 10px",
-              marginTop: "10px",
+              marginTop: "5px",
             }}
             className="move-button"
           >
-            <IconButton color="inherit" style={{ height: "35px" }} onClick={handleClickButtonMove}>
+            <IconButton
+              color="inherit"
+              style={{ height: "35px" }}
+              onClick={handleClickButtonMove}
+            >
               <Typography variant="body1" style={{ padding: "0 5px" }}>
                 Move
               </Typography>
@@ -267,142 +284,6 @@ const MoveMenu = (props) => {
           </Grid>
         </Grid>
       </Paper>
-      {/* ===========================================ORDER===================================== */}
-
-      <Menu
-        open={openOrder}
-        anchorEl={orderRef.current}
-        role={undefined}
-        transition
-        disablePortal
-      >
-        <Paper>
-          <ClickAwayListener onClickAway={handleClose}>
-            <MenuList
-              autoFocusItem={openOrder}
-              id="menu-list-grow-list"
-              onKeyDown={handleListKeyDown}
-            >
-              {props.chosenList.cards.length !== 0 ? (
-                <React.Fragment>
-                  {props.chosenList.cards.map((el, index) => (
-                    <MenuItem
-                      name="chosenOrder"
-                      key={el.id}
-                      onClick={handleClickOrder}
-                      value={index}
-                      style={{
-                        width: "284px",
-                        backgroundColor: "#0e0e0e",
-                        color: "white",
-                      }}
-                    >
-                      {index + 1}
-                    </MenuItem>
-                  ))}
-                </React.Fragment>
-              ) : (
-                <MenuItem
-                  name="chosenOrder"
-                  onClick={handleClickOrder}
-                  style={{
-                    width: "284px",
-                    backgroundColor: "#0e0e0e",
-                    color: "white",
-                  }}
-                >
-                  1
-                </MenuItem>
-              )}
-            </MenuList>
-          </ClickAwayListener>
-        </Paper>
-      </Menu>
-      {/* ===========================================LIST===================================== */}
-      <Menu
-        open={openList}
-        anchorEl={listRef.current}
-        role={undefined}
-        transition
-        disablePortal
-      >
-        <Paper>
-          <ClickAwayListener onClickAway={handleClose}>
-            <MenuList
-              autoFocusItem={openList}
-              id="menu-list-grow-list"
-              onKeyDown={handleListKeyDown}
-            >
-              {props.chosenBoard.lists !== [] ? (
-                <React.Fragment>
-                  {props.chosenBoard.lists.map((el, index) => (
-                    <MenuItem
-                      name="chosenListId"
-                      key={el.id}
-                      onClick={handleClickList}
-                      value={el.id}
-                      style={{
-                        width: "284px",
-                        backgroundColor: "#0e0e0e",
-                        color: "white",
-                      }}
-                    >
-                      {el.title}
-                    </MenuItem>
-                  ))}
-                </React.Fragment>
-              ) : (
-                <MenuItem
-                  name="chosenBoardId"
-                  onClick={handleClickList}
-                  style={{
-                    width: "284px",
-                    backgroundColor: "#0e0e0e",
-                    color: "white",
-                  }}
-                >
-                  No List
-                </MenuItem>
-              )}
-            </MenuList>
-          </ClickAwayListener>
-        </Paper>
-      </Menu>
-
-      {/* ===========================================BOARD===================================== */}
-      <Menu
-        open={openBoard}
-        anchorEl={boardRef.current}
-        role={undefined}
-        transition
-        disablePortal
-      >
-        <Paper>
-          <ClickAwayListener onClickAway={handleClose}>
-            <MenuList
-              autoFocusItem={openBoard}
-              id="menu-list-grow"
-              onKeyDown={handleListKeyDown}
-            >
-              {props.boardList.map((el, index) => (
-                <MenuItem
-                  name="chosenListId"
-                  key={el.id}
-                  onClick={handleClickBoard}
-                  value={el.id}
-                  style={{
-                    width: "284px",
-                    backgroundColor: "#0e0e0e",
-                    color: "white",
-                  }}
-                >
-                  {el.title}
-                </MenuItem>
-              ))}
-            </MenuList>
-          </ClickAwayListener>
-        </Paper>
-      </Menu>
     </div>
   );
 };

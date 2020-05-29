@@ -298,3 +298,19 @@ text-transform: uppercase;
 .move-button .MuiIconButton-label{
     justify-content: center !important;
 }
+.MuiFormControl-root{
+    background-color: rgba(9,30,66,.04) !important;
+    min-width: 100% !important;
+}
+.MuiFormControl-root:hover, .MuiFormControl-root:focus, .MuiFormControl-root:active{
+    background-color: rgba(9, 30, 66, 0.123) !important;
+}
+.MuiFormLabel-root.Mui-focused{
+    color: gray !important;
+}
+.MuiNativeSelect-select:focus{
+    background-color: inherit !important;
+}
+.MuiInputBase-input{
+    font-size: 14px !important;
+}

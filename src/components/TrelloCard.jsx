@@ -179,6 +179,7 @@ const TrelloCard = (props) => {
                   chosenList={props.chosenList}
                   chosenOrder={props.chosenOrder}
                   chooseOrder={props.chooseOrder}
+                  activeBoard={props.activeBoard}
                   moveCard={props.moveCard}
                 />
                 {/* </Fade> */}

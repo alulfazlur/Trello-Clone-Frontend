@@ -48,7 +48,7 @@ const boardReducer = (boardState = initialState, action) => {
     case "CHANGE_CHOSEN_BOARD_ID":
       return {
         ...boardState,
-        chosenBoardId : action.payload.target.value,
+        [action.payload.target.name] : action.payload.target.value,
         isLoading: true,
       };
     default:

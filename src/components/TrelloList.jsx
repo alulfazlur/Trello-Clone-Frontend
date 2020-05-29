@@ -184,7 +184,8 @@ const TrelloList = (props) => {
                         chosenList={props.chosenList}
                         chosenOrder={props.chosenOrder}
                         chooseOrder={props.chooseOrder}
-                        moveCard={props.moveCard}
+                        activeBoard={props.activeBoard}
+  moveCard={props.moveCard}
                       />
                     ))}
                     {provided.placeholder}

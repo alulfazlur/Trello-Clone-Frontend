@@ -28,7 +28,7 @@ class AddButton extends Component {
     const { newTitle } = this.props.lists;
 
     if (newTitle) {
-      this.props.createList(this.props.board.activerBoardId, newTitle);
+      this.props.createList(this.props.board.activeBoardId, newTitle);
     }
     this.setState({ newTitle: "" });
   };
