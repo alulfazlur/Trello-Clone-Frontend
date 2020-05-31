@@ -5,7 +5,7 @@ import IconButton from "@material-ui/core/IconButton";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import { Droppable, Draggable } from "react-beautiful-dnd";
 import TextArea from "react-textarea-autosize";
-import { Card } from "@material-ui/core";
+import { Card, Icon } from "@material-ui/core";
 
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
@@ -70,12 +70,7 @@ const TrelloList = (props) => {
     setAnchorEl(null);
   };
   const menuId = "primary-search-account-menu";
-  // const options = [
-  //   'Show some love to Material-UI',
-  //   'Show all notification content',
-  //   'Hide sensitive notification content',
-  //   'Hide all notification content',
-  // ];
+
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
@@ -148,6 +143,13 @@ const TrelloList = (props) => {
                         {props.title}
                       </div>
                     )}
+                    <Icon
+                      className="close-form"
+                      style={{ fontSize: "20px" }}
+                      onMouseDown={(listId) => props.deleteList(props.listId)}
+                    >
+                      delete
+                    </Icon>
                     <IconButton
                       aria-label="account of current user"
                       aria-controls={menuId}
@@ -171,6 +173,7 @@ const TrelloList = (props) => {
                         description={el.description}
                         members={el.members}
                         code={el.code}
+                        label={el.label}
                         index={index}
                         renameCard={props.renameCard}
                         changeInputBoard={props.changeInputBoard}
@@ -185,7 +188,19 @@ const TrelloList = (props) => {
                         chosenOrder={props.chosenOrder}
                         chooseOrder={props.chooseOrder}
                         activeBoard={props.activeBoard}
-  moveCard={props.moveCard}
+                        moveCard={props.moveCard}
+                        userBio={props.userBio}
+                        deleteCard={props.deleteCard}
+                        // handleCardMember={props.handleCardMember}
+
+                        cardMembers={props.cardMembers}
+                        getCardMember={props.getCardMember}
+                        addCardMember={props.addCardMember}
+                        deleteCardMember={props.deleteCardMember}
+                        cardLabels={props.cardLabels}
+                        getCardLabel={props.getCardLabel}
+                        addCardLabel={props.addCardLabel}
+                        deleteCardLabel={props.deleteCardLabel}
                       />
                     ))}
                     {provided.placeholder}

@@ -1,7 +1,3 @@
-body{
-    background-color: #5aac44;
-    /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !important */
-}
 html {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -249,9 +245,9 @@ html {
 .MuiList-padding{
     padding: 0px !important;
 }
-.move-menu .MuiIconButton-root{
+.menu .MuiIconButton-root{
     margin-top: 10px !important;
-    background-color: rgba(9,30,66,.04) !important;
+    background-color: none !important;
     justify-content: center !important;
     width: 100% !important;
     color: #172b4d !important;
@@ -260,16 +256,17 @@ html {
     font-weight: 400 !important;
     text-align: left !important;
 }
-.move-menu .MuiIconButton-label{
+.menu .MuiIconButton-label{
     justify-content: left !important;
 }
-.move-menu-title .MuiIconButton-root{
-    border-radius: 50% !important;
+.menu-title .MuiButtonBase-root:hover{
+    background-color: inherit !important;
 }
-.move-menu .MuiIconButton-root:hover{
-    background-color: rgba(9, 30, 66, 0.123) !important;
+.menu-title .MuiSvgIcon-root:hover{
+    color: black !important
 }
-.move-menu h4 {
+
+.menu h4 {
     color: #5e6c84;
 font-size: 12px;
 font-weight: 500;
@@ -277,6 +274,7 @@ letter-spacing: .04em;
 line-height: 16px;
 margin-top: 16px;
 text-transform: uppercase;
+padding-left: 5px;
 }
 .no-decoration .MuiIconButton-root{
     cursor: inherit;
@@ -288,9 +286,12 @@ text-transform: uppercase;
 }
 
 .move-button .MuiIconButton-root{
+    margin-top: 5px !important;
     background-color: #5aac44 !important;
     align-self: center !important;
     color: white !important;
+    height: 30px !important;
+    width:80px !important
 }
 .move-button .MuiIconButton-root:hover{
     background-color: #60bb46 !important;
@@ -314,3 +315,135 @@ text-transform: uppercase;
 .MuiInputBase-input{
     font-size: 14px !important;
 }
+.MuiNativeSelect-icon{
+    display: none !important;
+}
+.member-list .MuiIconButton-root{
+    margin-top: 0px !important;
+    background-color: inherit !important;
+    max-width: 95%;
+}
+.member-list .MuiIconButton-root:hover{
+    background-color: inherit !important;
+}
+.member-search{
+    width: 95%;
+    height: 36px;
+  border: 1px solid rgb(190, 190, 190);
+  outline-color: blue;
+  border-radius: 3px;
+  font-size: 13px !important;
+}
+.member-search .MuiInputBase-input{
+  padding-left: 10px !important;
+}
+.member-search-container .Mui-focused {
+    /* border: 2px solid rgb(1, 51, 218) !important; */
+    box-shadow: inset 0 0 0 2px #0079bf;
+}
+
+.member-list .MuiSvgIcon-root{
+    padding-top: 5px !important;
+}
+
+.modal-memberlist .MuiIconButton-root{
+    margin-top: 10px !important;
+    background-color: rgba(9,30,66,.04) !important;
+    justify-content: left;
+    width: fit-content !important;
+    border-radius: 3px !important;
+    color: #172b4d !important;
+    font-size: 14px !important;
+    line-height: 20px !important;
+    font-weight: 400 !important;
+}
+.modal-memberlist .MuiIconButton-root:hover{
+    background-color: rgba(9, 30, 66, 0.123) !important;
+}
+.modal-memberlist .MuiTypography-root{
+    font-size: 13px !important;
+}
+.label-list{
+    margin-top: 10px !important;
+    justify-content: left;
+    width: 35px !important;
+    border-radius: 3px !important;
+    color: #172b4d !important;
+    font-size: 14px !important;
+    line-height: 20px !important;
+    font-weight: 400 !important;
+}
+.label-list-menu{
+    margin-top: 10px !important;
+    justify-content: left;
+    width: 110% !important;
+    border-radius: 3px !important;
+    color: #172b4d !important;
+    font-size: 14px !important;
+    line-height: 20px !important;
+    font-weight: 400 !important;
+}
+.label-list-modal .MuiIconButton-root{
+    margin-top: 10px !important;
+    background-color: inherit !important;
+    max-width: 95%;
+}
+.label-list-modal .MuiIconButton-root:hover{
+    background-color: inherit !important;
+}
+
+.board-page .MuiIconButton-root{
+
+}
+.board-page .MuiButtonBase-root{
+    color: #0079bf !important;
+    background-color: inherit;
+    border: #0079bf 2px solid;
+    margin-bottom: 10px !important;
+}
+
+/* ==================================== Login ========================================== */
+
+.login-page {
+    width: 360px;
+    padding: 8% 0 0;
+    margin: auto;
+  }
+  .login-form {
+    position: relative;
+    z-index: 1;
+    background: #ffffff;
+    max-width: 360px;
+    margin: 0 auto 100px;
+    padding: 45px;
+    text-align: center;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+  }
+  .login-form input {
+    font-family: "Roboto", sans-serif;
+    outline: 0;
+    background: #f2f2f2;
+    width: 100%;
+    border: 0;
+    margin: 0 0 15px;
+    padding: 15px;
+    box-sizing: border-box;
+    font-size: 14px;
+  }
+  .form button {
+    font-family: "Roboto", sans-serif;
+    text-transform: uppercase;
+    outline: 0;
+    background: #3f51b5;
+    width: 100%;
+    border: 0;
+    padding: 15px;
+    color: #ffffff;
+    font-size: 14px;
+    -webkit-transition: all 0.3 ease;
+    transition: all 0.3 ease;
+    cursor: pointer;
+  }
+  .form button:hover {
+    background: #4c61d8;
+  }

@@ -10,8 +10,8 @@ import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import NativeSelect from "@material-ui/core/NativeSelect";
 
-import StarBorderOutlinedIcon from "@material-ui/icons/StarBorderOutlined";
-import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
+// import StarBorderOutlinedIcon from "@material-ui/icons/StarBorderOutlined";
+// import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,7 +19,8 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     width: "304px",
-    height: "360px",
+    height: "252px",
+    // height: "360px",
     backgroundColor: "#f4f5f7",
     boxShadow: theme.shadows[5],
     borderRadius: "3px",
@@ -60,10 +61,10 @@ const MoveMenu = (props) => {
   });
 
   return (
-    <div className="move-menu">
+    <div className="menu">
       <Paper className={classes.paper}>
         <Grid container>
-          <Grid item xs={12} container className="move-menu-title">
+          <Grid item xs={12} container className="menu-title">
             <Grid item xs={10}>
               <Typography
                 gutterBottom
@@ -71,8 +72,8 @@ const MoveMenu = (props) => {
                 style={{
                   color: "gray",
                   textAlign: "center",
-                  paddingLeft: "30px",
-                  paddingTop: "10px",
+                  paddingLeft: "35px",
+                  paddingTop: "15px",
                 }}
                 disabled
               >
@@ -84,10 +85,10 @@ const MoveMenu = (props) => {
                 <CloseIcon style={{ color: "gray", fontSize: "14px" }} />
               </IconButton>
             </Grid>
-            <hr style={{ width: "100%", opacity: "15%" }} />
+            <hr style={{ width: "90%", opacity: "15%" }} />
           </Grid>
 
-          <Grid
+          {/* <Grid
             item
             xs={12}
             style={{ padding: "0 10px" }}
@@ -127,12 +128,12 @@ const MoveMenu = (props) => {
             >
               Feedback
             </span>
-          </Grid>
+          </Grid> */}
 
           <Grid
             item
             xs={12}
-            style={{ padding: "0 10px" }}
+            style={{ padding: "10px 0 10px" }}
             className="no-decoration"
           >
             <IconButton color="inherit" style={{ height: "35px" }}>
@@ -141,7 +142,7 @@ const MoveMenu = (props) => {
           </Grid>
 
       {/* ===========================================BOARD===================================== */}
-          <Grid item xs={12} style={{ padding: "10px 10px" }}>
+          <Grid item xs={12} style={{ padding: "0 10px" }}>
           <FormControl className="menu-form-control">
                 <InputLabel
                   htmlFor="board-choose"
@@ -159,7 +160,7 @@ const MoveMenu = (props) => {
                   style={{ textDecoration: "none" }}
                   disableUnderline={true}
                 >
-                  <option aria-label="None" value={props.activeBoard.id} selected>
+                  <option aria-label="None" value={props.activeBoard.id} defaultValue>
                     {props.boardTitle}
                   </option>
                   {chosenBoard.map((el, index) => (
@@ -196,7 +197,7 @@ const MoveMenu = (props) => {
                 {props.chosenBoard.id === props.activeBoard.id ? 
                   (
                 <React.Fragment>
-                    <option aria-label="None" value={props.listId} selected>
+                    <option aria-label="None" value={props.listId} defaultValue>
                     {props.listTitle}
                   </option>
                   {chosenList.map((el, index) => (
@@ -206,13 +207,13 @@ const MoveMenu = (props) => {
                   ))}
                     </React.Fragment>
                   ) : (
-                    <option aria-label="None" value={props.chosenBoard.lists[0].id} selected>
+                    <option aria-label="None" value={props.chosenBoard.lists[0].id} defaultValue>
                     {props.chosenBoard.lists[0].title}
                   </option>
                   )}
                   </React.Fragment>
                   ) : (
-                    <option aria-label="None" value="" selected>
+                    <option aria-label="None" value="" defaultValue>
                    No Lists
                   </option>
                     )}
@@ -241,7 +242,7 @@ const MoveMenu = (props) => {
                 >
               {props.chosenList.cards.length !== 0 ? (
                 <React.Fragment>
-                  <option aria-label="None" value={props.order} selected>
+                  <option aria-label="None" value={props.order} defaultValue>
                     {parseInt(props.order) + 1}
                   </option>
                   {chosenOrder.map((el, index) => (
@@ -249,12 +250,12 @@ const MoveMenu = (props) => {
                       {el.order + 1}
                     </option>
                   ))}
-                  <option aria-label="None" value={props.chosenList.cards.length} selected>
+                  <option aria-label="None" value={props.chosenList.cards.length} defaultValue>
                     {props.chosenList.cards.length + 1}
                   </option>
                   </React.Fragment>
                   ) : (
-                    <option aria-label="None" value="0" selected>
+                    <option aria-label="None" value="0" defaultValue>
                    1
                   </option>
                     )}
@@ -262,19 +263,18 @@ const MoveMenu = (props) => {
               </FormControl>
             </Grid>
           </Grid>
+      {/* ===========================================/ORDER===================================== */}
 
           <Grid
             item
             xs={5}
             style={{
               padding: "0 10px",
-              marginTop: "5px",
             }}
             className="move-button"
           >
             <IconButton
               color="inherit"
-              style={{ height: "35px" }}
               onClick={handleClickButtonMove}
             >
               <Typography variant="body1" style={{ padding: "0 5px" }}>

@@ -11,7 +11,10 @@
 const initialState = {
   cardList: [],
   isLoading: false,
-  chosenOrder : "0"
+  chosenOrder : "0",
+  cardMembers : [],
+  cardLabels : [],
+  searchMembers:""
 };
 
 export default function cardReducer(cardState = initialState, action) {
@@ -27,6 +30,42 @@ export default function cardReducer(cardState = initialState, action) {
       return {
         ...cardState,
         isLoading: false,
+      };
+      case "SUCCESS_GET_CARD_MEMBER":
+      return {
+        ...cardState,
+        cardMembers : action.payload
+        // isLoading: true,
+      };
+      case "SUCCESS_ADD_CARD_MEMBER":
+      return {
+        ...cardState,
+        cardMembers : action.payload
+        // isLoading: true,
+      };
+      case "SUCCESS_DELETE_CARD_MEMBER":
+      return {
+        ...cardState,
+        cardMembers : action.payload
+        // isLoading: true,
+      };
+      case "SUCCESS_GET_CARD_LABEL":
+      return {
+        ...cardState,
+        cardLabels : action.payload
+        // isLoading: true,
+      };
+      case "SUCCESS_ADD_CARD_LABEL":
+      return {
+        ...cardState,
+        cardLabels : action.payload
+        // isLoading: true,
+      };
+      case "SUCCESS_DELETE_CARD_LABEL":
+      return {
+        ...cardState,
+        cardLabels : action.payload
+        // isLoading: true,
       };
     case "SUCCESS_GET_CARDS":
       return {
@@ -66,12 +105,11 @@ export default function cardReducer(cardState = initialState, action) {
       return { ...cardState, [`card-${id}`]: card };
     }
 
-    case "SUCCESS_DELETE_CARD": {
-      const { id } = action.payload;
-      const newState = cardState;
-      delete newState[id];
-      return newState;
-    }
+    case "SUCCESS_DELETE_CARD":
+        return {
+          ...cardState,
+          isLoading: true,
+        };
     default:
       return cardState;
   }

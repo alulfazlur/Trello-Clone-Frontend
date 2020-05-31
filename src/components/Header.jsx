@@ -6,6 +6,7 @@ import IconButton from "@material-ui/core/IconButton";
 import InputBase from "@material-ui/core/InputBase";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
+import { Link } from "react-router-dom";
 
 import Typography from '@material-ui/core/Typography';
 
@@ -95,18 +96,8 @@ const Header = (props) => {
   };
   const handleMenuClose = () => {
     setAnchorEl(null);
-    // handleMobileMenuClose();
   };
   
-  // const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-  // const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-  // const handleMobileMenuClose = () => {
-  //   setMobileMoreAnchorEl(null);
-  // };
-  // const handleMobileMenuOpen = (event) => {
-  //   setMobileMoreAnchorEl(event.currentTarget);
-  // };
-
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -118,14 +109,13 @@ const Header = (props) => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={props.doLogOut}>Log Out</MenuItem>
     </Menu>
   );
 
   return (
     <div className={classes.grow}>
-      <AppBar position="static"  style={{ position: 'fixed', top: 0, backgroundColor:"rgba(0,0,0,.15)"}}>
+      <AppBar position="static"  style={{ position: 'fixed', top: 0, backgroundColor:`${props.background}`}}>
         <Toolbar>
           <IconButton color="inherit">
             <AppsIcon />
@@ -133,12 +123,14 @@ const Header = (props) => {
           <IconButton color="inherit">
             <HomeOutlinedIcon />
           </IconButton>
+          <Link to="/">
           <IconButton color="inherit">
             <DashboardOutlinedIcon style={{marginRight:"5px"}}/>
             <Typography variant="body1" className={classes.title} style={{fontWeight:"bolder"}}>
             Boards
           </Typography>
           </IconButton>
+          </Link>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
@@ -165,6 +157,7 @@ const Header = (props) => {
             <IconButton>
               <NotificationsOutlinedIcon />
             </IconButton>
+            {localStorage.getItem("login_status") ? 
             <IconButton
               edge="end"
               aria-label="account of current user"
@@ -174,7 +167,7 @@ const Header = (props) => {
              
             >
               <AccountCircle />
-            </IconButton>
+            </IconButton> : false}
           </div>
           {/* <div className={classes.sectionMobile}>
             <IconButton

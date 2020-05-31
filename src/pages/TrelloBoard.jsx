@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 // import { Link } from "react-router-dom";
-// import { Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import Header from "../components/Header";
 import BoardHeader from "../components/SecondHeader";
 
@@ -19,7 +19,8 @@ import {
   reorderList,
   stopLoadingList,
   chooseListId,
-  getChosenList
+  getChosenList,
+  deleteList
 } from "../store/actions/listsAction";
 import {
   getActiveBoard,
@@ -35,12 +36,23 @@ import {
   renameCard,
   changeInputCard,
   moveCard,
-  chooseOrder
+  chooseOrder,
+  // handleCardMember
+  addCardMember,
+  deleteCardMember,
+  getCardMember,
+  addCardLabel,
+  deleteCardLabel,
+  getCardLabel,
+  deleteCard
 } from "../store/actions/cardAction";
-
+import {
+  getBio, doLogOut
+} from "../store/actions/userAction";
 class Board extends Component {
   componentDidMount = async () => {
     const { boardId } = this.props.match.params;
+    this.props.getBio();
     this.props.getList(boardId);
     this.props.getActiveBoard(boardId);
     this.props.setActiveBoard(boardId);
@@ -58,8 +70,8 @@ class Board extends Component {
     this.props.getChosenList()
     }
     if (this.props.isLoadingCard) {
-      this.props.getList(boardId);
-      await this.props.stopLoading();
+      await this.props.getList(boardId);
+      this.props.stopLoading();
     }
     if (this.props.isLoadingBoard) {
       this.props.getBoardList();
@@ -101,9 +113,34 @@ class Board extends Component {
   render() {
     const lists = this.props.lists;
     const activeBoard = this.props.activeBoard;
+
+    // if (this.props.isLoadingBoard || this.props.isLoadingList || this.props.isLoadingCard) {
+    // return (
+    //   <div style={{backgroundColor: "#5aac44", minHeight: "100vh"}}>
+    //   <Header background={"rgba(0,0,0,.15)"}
+    //     doLogOut={() => this.props.doLogOut()}
+    //   />
+    //   <div style={{ paddingTop: "50px" }}>
+    //     <BoardHeader boardTitle={activeBoard.title} />
+    //   </div>
+    //   </div>
+    // )
+    // } else {
+      if (!localStorage.getItem("login_status")) {
+        return (
+          <Redirect
+            to={{
+              pathname: "/signin",
+              state: { message: "You must sign in first!" },
+            }}
+          />
+        );
+      } else {
     return (
-      <React.Fragment>
-        <Header />
+      <div style={{backgroundColor: "#5aac44", minHeight: "100vh"}}>
+        <Header background={"rgba(0,0,0,.15)"}
+          doLogOut={() => this.props.doLogOut()}
+        />
         <div style={{ paddingTop: "50px" }}>
           <BoardHeader boardTitle={activeBoard.title} />
         </div>
@@ -151,6 +188,20 @@ class Board extends Component {
                         chooseOrder={(e) => this.props.chooseOrder(e)}
                         chosenList={this.props.chosenList}
                         chosenOrder={this.props.chosenOrder}
+                        userBio={this.props.userBio}
+                        deleteCard={(id) => this.props.deleteCard(id)}
+                        deleteList={(id) => this.props.deleteList(id)}
+
+                        // handleCardMember={(cardId, e) => this.props.handleCardMember(cardId, e)}
+                        cardMembers={this.props.cardMembers}
+                        getCardMember={(cardId) => this.props.getCardMember(cardId)}
+                        addCardMember={(cardId, username) => this.props.addCardMember(cardId, username)}
+                        deleteCardMember={(cardId, username) => this.props.deleteCardMember(cardId, username)}
+                        
+                        cardLabels={this.props.cardLabels}
+                        getCardLabel={(cardId) => this.props.getCardLabel(cardId)}
+                        addCardLabel={(cardId, label) => this.props.addCardLabel(cardId, label)}
+                        deleteCardLabel={(cardId, label) => this.props.deleteCardLabel(cardId, label)}
                       />
                     );
                   })}
@@ -161,9 +212,10 @@ class Board extends Component {
             </Droppable>
           </div>
         </DragDropContext>
-      </React.Fragment>
+      </div>
     );
   }
+}
 }
 const mapStateToProps = (state) => {
   return {
@@ -181,6 +233,9 @@ const mapStateToProps = (state) => {
     isLoadingBoard: state.board.isLoading,
     isLoadingList: state.lists.isLoading,
     isLoadingCard: state.cards.isLoading,
+    cardMembers : state.cards.cardMembers,
+    cardLabels : state.cards.cardLabels,
+    userBio : state.user
   };
 };
 const mapDispatchToProps = {
@@ -204,7 +259,18 @@ const mapDispatchToProps = {
   chooseListId,
   getChosenList,
   moveCard,
-  chooseOrder
+  chooseOrder,
+  // handleCardMember
+  addCardMember,
+  deleteCardMember,
+  getCardMember,
+  addCardLabel,
+  deleteCardLabel,
+  getCardLabel,
+  getBio,
+  doLogOut,
+  deleteCard,
+  deleteList
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Board);

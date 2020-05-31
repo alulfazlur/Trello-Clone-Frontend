@@ -71,6 +71,11 @@ export default function listsReducer(listsState = initialState, action) {
         ...listsState,
         isLoading : true,
       };
+      case "SUCCESS_DELETE_LIST":
+      return {
+        ...listsState,
+        isLoading : true,
+      };
     case "CHANGE_INPUT_LIST":
       return {
         ...listsState,

@@ -29,7 +29,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 
 import Menu from "@material-ui/core/Menu";
-import MoveMenu from "./MoveCardMenu";
+import MoveMenu from "./MoveMenu";
+import MemberMenu from "./MemberMenu";
+import LabelMenu from "./LabelMenu";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -46,24 +48,117 @@ const useStyles = makeStyles((theme) => ({
 
 const CardModal = (props) => {
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const isMenuOpen = Boolean(anchorEl);
-  const handleMoveMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
   const handleMenuClose = () => {
-    setAnchorEl(null);
+    setAnchorMove(null);
+    setAnchorMember(null);
+    setAnchorLabel(null);
   };
 
-  const moveMenu = "move-menu";
-  const renderMenu = (
+  const [anchorMember, setAnchorMember] = React.useState(null);
+  const isMemberMenuOpen = Boolean(anchorMember);
+  const handleMemberMenuOpen = (event) => {
+    setAnchorMember(event.currentTarget);
+  };
+
+  const renderMemberMenu = (
     <Menu
-      anchorEl={anchorEl}
+      anchorEl={anchorMember}
       anchorOrigin={{ vertical: "top", horizontal: "right" }}
-      id={moveMenu}
+      id="member-menu"
+      keepMounted
+      transformOrigin={{ vertical: "top", horizontal: "left" }}
+      open={isMemberMenuOpen}
+      onClose={handleMenuClose}
+      style={{ padding: "0px" }}
+    >
+      <MemberMenu
+        propCard={props.propCard}
+        cardId={props.cardId}
+        text={props.text}
+        order={props.order}
+        description={props.description}
+        members={props.members}
+        listId={props.listId}
+        listTitle={props.listTitle}
+        boardList={props.boardList}
+        boardTitle={props.boardTitle}
+        activeBoard={props.activeBoard}
+        chosenList={props.chosenList}
+        chosenOrder={props.chosenOrder}
+        chosenBoard={props.chosenBoard}
+        changeInputBoard={props.changeInputBoard}
+        chooseListId={props.chooseListId}
+        chooseOrder={props.chooseOrder}
+        moveCard={props.moveCard}
+        handleMenuClose={handleMenuClose}
+        addCardMember={props.addCardMember}
+        deleteCardMember={props.deleteCardMember}
+        cardMembers={props.cardMembers}
+        userBio={props.userBio}
+        changeInputCard={props.changeInputCard}
+        // handleCardMember={props.handleCardMember}
+      />
+    </Menu>
+  );
+
+  const [anchorLabel, setAnchorLabel] = React.useState(null);
+  const isLabelMenuOpen = Boolean(anchorLabel);
+  const handleLabelMenuOpen = (event) => {
+    setAnchorLabel(event.currentTarget);
+  };
+
+  const renderLabelMenu = (
+    <Menu
+      anchorEl={anchorLabel}
+      anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      id="label-menu"
+      keepMounted
+      transformOrigin={{ vertical: "top", horizontal: "left" }}
+      open={isLabelMenuOpen}
+      onClose={handleMenuClose}
+      style={{ padding: "0px" }}
+    >
+      <LabelMenu
+        cardId={props.cardId}
+        text={props.text}
+        order={props.order}
+        description={props.description}
+        members={props.members}
+        listId={props.listId}
+        listTitle={props.listTitle}
+        boardList={props.boardList}
+        boardTitle={props.boardTitle}
+        activeBoard={props.activeBoard}
+        chosenList={props.chosenList}
+        chosenOrder={props.chosenOrder}
+        chosenBoard={props.chosenBoard}
+        changeInputBoard={props.changeInputBoard}
+        chooseListId={props.chooseListId}
+        chooseOrder={props.chooseOrder}
+        moveCard={props.moveCard}
+        handleMenuClose={handleMenuClose}
+        addCardLabel={props.addCardLabel}
+        deleteCardLabel={props.deleteCardLabel}
+        cardLabels={props.cardLabels}
+        userBio={props.userBio}
+        // handleCardMember={props.handleCardMember}
+      />
+    </Menu>
+  );
+
+  const [anchorMove, setAnchorMove] = React.useState(null);
+  const isMoveMenuOpen = Boolean(anchorMove);
+  const handleMoveMenuOpen = (event) => {
+    setAnchorMove(event.currentTarget);
+  };
+  const renderMoveMenu = (
+    <Menu
+      anchorEl={anchorMove}
+      anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      id="move-menu"
       keepMounted
       transformOrigin={{ vertical: "bottom", horizontal: "left" }}
-      open={isMenuOpen}
+      open={isMoveMenuOpen}
       onClose={handleMenuClose}
       style={{ padding: "0px" }}
     >
@@ -73,23 +168,19 @@ const CardModal = (props) => {
         order={props.order}
         description={props.description}
         members={props.members}
-
         listId={props.listId}
         listTitle={props.listTitle}
         boardList={props.boardList}
-        
         boardTitle={props.boardTitle}
         activeBoard={props.activeBoard}
-        
         chosenList={props.chosenList}
         chosenOrder={props.chosenOrder}
         chosenBoard={props.chosenBoard}
-        
         changeInputBoard={props.changeInputBoard}
         chooseListId={props.chooseListId}
         chooseOrder={props.chooseOrder}
         moveCard={props.moveCard}
-        handleMenuClose = {handleMenuClose}
+        handleMenuClose={handleMenuClose}
       />
     </Menu>
   );
@@ -145,6 +236,77 @@ const CardModal = (props) => {
         >
           {/* Kiri */}
           <Grid item xs={9}>
+            <Grid item xs={12} sm container style={{paddingLeft:"35px"}}>
+              {props.cardMembers.length !== 0 ? (
+                <Grid item xs={6} sm>
+                  <Grid item xs={12} className="right-modal">
+                    <h3>members</h3>
+                  </Grid>
+                  <Grid
+                    item
+                    xs={12}
+                    sm
+                    container
+                    style={{ paddingTop: "10px" }}
+                  >
+                    <Grid item xs={12} className="modal-memberlist">
+                      {props.cardMembers.map((el, index) => (
+                        <IconButton
+                          color="inherit"
+                          style={{ height: "35px" }}
+                          onClick={() =>
+                            props.deleteCardMember(props.cardId, el.username)
+                          }
+                        >
+                          <PersonOutlineIcon style={{ fontSize: "15px" }} />
+                          <Typography
+                            variant="body1"
+                            style={{ padding: "0 5px" }}
+                          >
+                            {el.username}
+                          </Typography>
+                        </IconButton>
+                      ))}
+                    </Grid>
+                  </Grid>
+                </Grid>
+              ) : (
+                false
+              )}
+
+              {props.cardLabels.length !== 0 ? (
+                <Grid item xs={6} sm>
+                  <Grid item xs={12} className="right-modal">
+                    <h3>labels</h3>
+                  </Grid>
+                  <Grid
+                    item
+                    xs={12}
+                    sm
+                    container
+                    style={{ paddingTop: "10px" }}
+                  >
+                    {props.cardLabels.map((el, index) => (
+                      <div
+                        color="inherit"
+                        className="label-list"
+                        style={{
+                          height: "35px",
+                          marginLeft: "10px",
+                          backgroundColor: `${el.label}`,
+                        }}
+                        onClick={() =>
+                          props.deleteCardLabels(props.cardId, el.label)
+                        }
+                      ></div>
+                    ))}
+                  </Grid>
+                </Grid>
+              ) : (
+                false
+              )}
+            </Grid>
+
             <Grid container style={{ paddingTop: "25px" }}>
               <Grid item xs={12} sm container>
                 <Grid item xs={1} style={{ textAlign: "center" }}>
@@ -223,13 +385,23 @@ const CardModal = (props) => {
           {/* Kanan */}
           <Grid item xs={3} className="right-modal">
             <h3>add to card</h3>
-            <IconButton color="inherit" style={{ height: "35px" }}>
+            <IconButton
+              color="inherit"
+              style={{ height: "35px" }}
+              aria-controls="member-menu"
+              onClick={handleMemberMenuOpen}
+            >
               <PersonOutlineIcon style={{ fontSize: "15px" }} />
               <Typography variant="body1" style={{ padding: "0 5px" }}>
                 Members
               </Typography>
             </IconButton>
-            <IconButton color="inherit" style={{ height: "35px" }}>
+            <IconButton
+              color="inherit"
+              style={{ height: "35px" }}
+              aria-controls="label-menu"
+              onClick={handleLabelMenuOpen}
+            >
               <LabelOutlinedIcon style={{ fontSize: "15px" }} />
               <Typography variant="body1" style={{ padding: "0 5px" }}>
                 Labels
@@ -274,7 +446,7 @@ const CardModal = (props) => {
             <IconButton
               color="inherit"
               style={{ height: "35px" }}
-              aria-controls={moveMenu}
+              aria-controls="move-menu"
               onClick={handleMoveMenuOpen}
             >
               <ArrowForwardIcon style={{ fontSize: "15px" }} />
@@ -316,7 +488,9 @@ const CardModal = (props) => {
           </Grid>
         </Grid>
       </Paper>
-      {renderMenu}
+      {renderMemberMenu}
+      {renderMoveMenu}
+      {renderLabelMenu}
     </div>
   );
 };

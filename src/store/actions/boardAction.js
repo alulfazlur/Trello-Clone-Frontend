@@ -65,6 +65,9 @@ export const getChosenBoard = () => {
       });
   };
 };
+
+
+
 export const stopLoadingBoard = () => {
   return {
     type: "STOP_LOADING",

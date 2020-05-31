@@ -10,12 +10,11 @@ export default function userReducer(userState = initialState, action) {
     case "SUCCESS_GET_BIO":
       return {
         ...userState,
+        id: action.payload.id,
+        username: action.payload.username,
         name: action.payload.name,
         email: action.payload.email,
         avatar: action.payload.avatar,
-        address: action.payload.address,
-        phone: action.payload.phone,
-        status: action.payload.status,
       };
     case "SUCCESS_LOGIN":
       return {

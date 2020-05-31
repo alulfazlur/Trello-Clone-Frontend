@@ -24,6 +24,31 @@ export const changeInputList = (e) => {
   };
 };
 
+export const deleteList = (id) => {
+  return async (dispatch) => {
+    const bodyRequest = {
+      id: id
+    };
+    const myJSON = JSON.stringify(bodyRequest);
+    console.warn("myJSON Body Req", myJSON);
+    const token = localStorage.getItem("token");
+    await axios({
+      method: "DELETE",
+      url: baseUrl + "/list",
+      headers: { Authorization: `Bearer ${token}` },
+      params: {
+        id: id,
+      },
+    })
+      .then(async (response) => {
+        dispatch({ type: "SUCCESS_DELETE_LIST", payload: response.data });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
 export const createList = (boardId, title) => {
   return async (dispatch) => {
     const bodyRequest = {
@@ -110,15 +135,6 @@ export const reorderList = (code, boardId, order) => {
       .catch((error) => {
         console.log(error);
       });
-  };
-};
-
-export const deleteList = (listId) => {
-  return {
-    type: "SUCCESS_DELETE_LIST",
-    payload: {
-      listId
-    }
   };
 };
 
