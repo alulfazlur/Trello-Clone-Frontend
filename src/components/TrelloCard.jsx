@@ -65,6 +65,7 @@ const TrelloCard = (props) => {
   const handleOpen = async () => {
     await props.getCardMember(props.cardId);
     await props.getCardLabel(props.cardId);
+    await props.getCardCover(props.cardId)
     setOpen(true);
   };
 
@@ -218,6 +219,8 @@ const TrelloCard = (props) => {
                     cardLabels={props.cardLabels}
                     addCardLabel={props.addCardLabel}
                     deleteCardLabel={props.deleteCardLabel}
+                        changeCardCover={props.changeCardCover}
+                        cardCover={props.cardCover}
                   />
                 </Fade>
               </Modal>

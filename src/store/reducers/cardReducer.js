@@ -14,12 +14,18 @@ const initialState = {
   chosenOrder : "0",
   cardMembers : [],
   cardLabels : [],
-  searchMembers:""
+  searchMembers:"",
+  cardCover:""
 };
 
 export default function cardReducer(cardState = initialState, action) {
   switch (action.type) {
-    case "SUCCESS_GET_CHOSEN_ORDER": {
+    case "SUCCESS_GET_CARD_COVER": {
+      return {
+        ...cardState,
+        cardCover: action.payload,
+      };
+    }case "SUCCESS_GET_CHOSEN_ORDER": {
       return {
         ...cardState,
         chosenOrder: action.payload.target.value,

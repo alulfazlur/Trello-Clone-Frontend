@@ -29,9 +29,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 
 import Menu from "@material-ui/core/Menu";
-import MoveMenu from "./MoveMenu";
 import MemberMenu from "./MemberMenu";
 import LabelMenu from "./LabelMenu";
+import CoverMenu from "./CoverMenu";
+import MoveMenu from "./MoveMenu";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -42,16 +43,17 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#f4f5f7",
     boxShadow: theme.shadows[5],
     borderRadius: "3px",
-    padding: "15px 5px",
+    // padding: "15px 0px",
   },
 }));
 
 const CardModal = (props) => {
   const classes = useStyles();
   const handleMenuClose = () => {
-    setAnchorMove(null);
     setAnchorMember(null);
     setAnchorLabel(null);
+    setAnchorCover(null);
+    setAnchorMove(null);
   };
 
   const [anchorMember, setAnchorMember] = React.useState(null);
@@ -97,6 +99,52 @@ const CardModal = (props) => {
         userBio={props.userBio}
         changeInputCard={props.changeInputCard}
         // handleCardMember={props.handleCardMember}
+      />
+    </Menu>
+  );
+
+  const [anchorCover, setAnchorCover] = React.useState(null);
+  const isCoverMenuOpen = Boolean(anchorCover);
+  const handleCoverMenuOpen = (event) => {
+    setAnchorCover(event.currentTarget);
+  };
+
+  const renderCoverMenu = (
+    <Menu
+      anchorEl={anchorCover}
+      anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      id="cover-menu"
+      keepMounted
+      transformOrigin={{ vertical: "top", horizontal: "left" }}
+      open={isCoverMenuOpen}
+      onClose={handleMenuClose}
+      style={{ padding: "0px" }}
+    >
+      <CoverMenu
+        cardId={props.cardId}
+        text={props.text}
+        order={props.order}
+        description={props.description}
+        members={props.members}
+        listId={props.listId}
+        listTitle={props.listTitle}
+        boardList={props.boardList}
+        boardTitle={props.boardTitle}
+        activeBoard={props.activeBoard}
+        chosenList={props.chosenList}
+        chosenOrder={props.chosenOrder}
+        chosenBoard={props.chosenBoard}
+        changeInputBoard={props.changeInputBoard}
+        chooseListId={props.chooseListId}
+        chooseOrder={props.chooseOrder}
+        moveCard={props.moveCard}
+        handleMenuClose={handleMenuClose}
+        addCardLabel={props.addCardLabel}
+        deleteCardLabel={props.deleteCardLabel}
+        cardLabels={props.cardLabels}
+        userBio={props.userBio}
+        // handleCardMember={props.handleCardMember}
+        changeCardCover={props.changeCardCover}
       />
     </Menu>
   );
@@ -188,8 +236,10 @@ const CardModal = (props) => {
   return (
     <div className="card-modal">
       <Paper className={classes.paper}>
-        <Grid container>
-          <Grid item xs={12} sm container>
+      { props.cardCover ? (
+      <Grid xs style={{backgroundColor:props.cardCover, height:"116px", minWidth: "100%"}}>
+      </Grid>):(false)}
+          <Grid item xs={12} sm container style={{padding:"15px 5px"}}>
             <Grid item xs={1} style={{ textAlign: "center" }}>
               <CreditCardIcon style={{ paddingTop: "5px", fontSize: "25px" }} />
             </Grid>
@@ -224,21 +274,20 @@ const CardModal = (props) => {
               </IconButton>
             </Grid>
           </Grid>
-        </Grid>
 
         <Grid
           item
           xs={12}
           sm
           container
-          spacing={4}
-          style={{ paddingLeft: "10px" }}
+          spacing={2}
+          style={{padding:"0px 5px"}}
         >
           {/* Kiri */}
           <Grid item xs={9}>
-            <Grid item xs={12} sm container style={{paddingLeft:"35px"}}>
+            <Grid item xs={12} sm container style={{paddingLeft:"45px"}}>
               {props.cardMembers.length !== 0 ? (
-                <Grid item xs={6} sm>
+                <Grid item xs>
                   <Grid item xs={12} className="right-modal">
                     <h3>members</h3>
                   </Grid>
@@ -275,7 +324,7 @@ const CardModal = (props) => {
               )}
 
               {props.cardLabels.length !== 0 ? (
-                <Grid item xs={6} sm>
+                <Grid item xs>
                   <Grid item xs={12} className="right-modal">
                     <h3>labels</h3>
                   </Grid>
@@ -292,7 +341,7 @@ const CardModal = (props) => {
                         className="label-list"
                         style={{
                           height: "35px",
-                          marginLeft: "10px",
+                          marginRight: "10px",
                           backgroundColor: `${el.label}`,
                         }}
                         onClick={() =>
@@ -307,7 +356,7 @@ const CardModal = (props) => {
               )}
             </Grid>
 
-            <Grid container style={{ paddingTop: "25px" }}>
+            <Grid container style={{padding:"25px 5px"}}>
               <Grid item xs={12} sm container>
                 <Grid item xs={1} style={{ textAlign: "center" }}>
                   <SubjectIcon style={{ fontSize: "25px" }} />
@@ -335,7 +384,7 @@ const CardModal = (props) => {
               </Grid>
             </Grid>
 
-            <Grid container style={{ paddingTop: "25px" }}>
+            <Grid container style={{padding:"10px 5px"}}>
               <Grid item xs={12} sm container>
                 <Grid item xs={1} style={{ textAlign: "center" }}>
                   <TocIcon style={{ fontSize: "25px" }} />
@@ -365,7 +414,7 @@ const CardModal = (props) => {
               </Grid>
             </Grid>
 
-            <Grid container style={{ paddingTop: "25px" }}>
+            <Grid container style={{padding:"10px 5px"}}>
               <Grid item xs={12} sm container>
                 <Grid item xs={1} style={{ textAlign: "center" }}>
                   <AccountCircle style={{ fontSize: "40px" }} />
@@ -425,7 +474,10 @@ const CardModal = (props) => {
                 Attachment
               </Typography>
             </IconButton>
-            <IconButton color="inherit" style={{ height: "35px" }}>
+            <IconButton color="inherit" style={{ height: "35px" }}
+            aria-controls="cover-menu"
+              onClick={handleCoverMenuOpen}
+              >
               <VideoLabelIcon style={{ fontSize: "15px" }} />
               <Typography variant="body1" style={{ padding: "0 5px" }}>
                 Cover
@@ -489,8 +541,9 @@ const CardModal = (props) => {
         </Grid>
       </Paper>
       {renderMemberMenu}
-      {renderMoveMenu}
       {renderLabelMenu}
+      {renderCoverMenu}
+      {renderMoveMenu}
     </div>
   );
 };

@@ -98,7 +98,7 @@ const LabelMenu = (props) => {
           <Grid
             container
             xs={12}
-            style={{ padding: "0 10px", marginBottom: "10px" }}
+            style={{ padding: "0 5px", marginBottom: "10px", justifyContent:"center" }}
             className="label-list-modal"
           >
             {availableLabel.map((el, index) => (

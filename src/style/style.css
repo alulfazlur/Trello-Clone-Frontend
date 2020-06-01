@@ -384,7 +384,7 @@ line-height: 20px !important;
 font-weight: 400 !important;
 }
 .label-list-modal .MuiIconButton-root{
-margin-top: 10px !important;
+margin-bottom: 5px !important;
 background-color: inherit !important;
 max-width: 95%;
 }

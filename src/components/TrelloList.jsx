@@ -174,6 +174,7 @@ const TrelloList = (props) => {
                         members={el.members}
                         code={el.code}
                         label={el.label}
+                        cover={el.cover}
                         index={index}
                         renameCard={props.renameCard}
                         changeInputBoard={props.changeInputBoard}
@@ -201,6 +202,10 @@ const TrelloList = (props) => {
                         getCardLabel={props.getCardLabel}
                         addCardLabel={props.addCardLabel}
                         deleteCardLabel={props.deleteCardLabel}
+
+                        getCardCover={props.getCardCover}
+                        changeCardCover={props.changeCardCover}
+                        cardCover={props.cardCover}
                       />
                     ))}
                     {provided.placeholder}

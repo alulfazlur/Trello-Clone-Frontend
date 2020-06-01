@@ -155,6 +155,62 @@ export const renameCard = (id, listId, text) => {
   };
 };
 
+export const getCardCover = (cardId) => {
+  return async (dispatch) => {
+    const request = {
+      cardId: cardId,
+    };
+    const myJSON = JSON.stringify(request);
+    console.warn("myJSON Body Req", myJSON);
+    await axios({
+      method: "GET",
+      url: baseUrl + "/card",
+      params: {
+        cardId: cardId
+      },
+    })
+      .then(async (response) => {
+        dispatch({ type: "SUCCESS_GET_CARD_COVER", payload: response.data.cover });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
+export const changeCardCover = (id, listId, cover) => {
+  return async (dispatch) => {
+    const request = {
+      id: id,
+      listId: listId,
+      cover : cover
+    };
+    const myJSON = JSON.stringify(request);
+    console.warn("myJSON Body Req", myJSON);
+    const token = localStorage.getItem("token");
+    await axios({
+      method: "PUT",
+      url: baseUrl + "/card",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        Accept: "application/json; charset=utf-8",
+        Authorization: `Bearer ${token}`,
+      },
+      data: {
+        id: id,
+        listId: listId,
+        cover : cover
+      },
+    })
+      .then(async (response) => {
+        dispatch({ type: "SUCCESS_GET_CARD_COVER", payload: response.data.cover });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
 export const getCardMember = (cardId) => {
   return async (dispatch) => {
     const bodyRequest = {

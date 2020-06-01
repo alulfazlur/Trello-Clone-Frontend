@@ -44,7 +44,9 @@ import {
   addCardLabel,
   deleteCardLabel,
   getCardLabel,
-  deleteCard
+  deleteCard,
+  getCardCover,
+  changeCardCover
 } from "../store/actions/cardAction";
 import {
   getBio, doLogOut
@@ -202,6 +204,10 @@ class Board extends Component {
                         getCardLabel={(cardId) => this.props.getCardLabel(cardId)}
                         addCardLabel={(cardId, label) => this.props.addCardLabel(cardId, label)}
                         deleteCardLabel={(cardId, label) => this.props.deleteCardLabel(cardId, label)}
+
+                        getCardCover={(cardId) => this.props.getCardCover(cardId)}
+                        changeCardCover={(cardId,listId, cover) => this.props.changeCardCover(cardId, listId,cover)}
+                        cardCover={this.props.cardCover}
                       />
                     );
                   })}
@@ -235,7 +241,8 @@ const mapStateToProps = (state) => {
     isLoadingCard: state.cards.isLoading,
     cardMembers : state.cards.cardMembers,
     cardLabels : state.cards.cardLabels,
-    userBio : state.user
+    userBio : state.user,
+    cardCover : state.cards.cardCover
   };
 };
 const mapDispatchToProps = {
@@ -270,7 +277,9 @@ const mapDispatchToProps = {
   getBio,
   doLogOut,
   deleteCard,
-  deleteList
+  deleteList,
+  getCardCover,
+  changeCardCover
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Board);
