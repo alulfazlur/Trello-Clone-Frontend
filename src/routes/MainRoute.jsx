@@ -4,7 +4,7 @@ import { Route, Switch, BrowserRouter } from "react-router-dom";
 import Home from "../pages/Home";
 import Board from "../pages/TrelloBoard";
 import SignIn from "../pages/Signin";
-// import SignUp from "../pages/Signup";
+import SignUp from "../pages/Signup";
 // import NotFound from "../pages/NotFound";
 
 import { Provider } from "react-redux";
@@ -17,8 +17,8 @@ const MainRoutes = () => {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/signin" component={SignIn} />
+          <Route exact path="/signup" component={SignUp} />
           <Route exact path="/:boardId" component={Board} />
-          {/* <Route exact path="/signup" component={SignUp} /> */}
           {/* <Route component={NotFound} /> */}
         </Switch>
       </BrowserRouter>

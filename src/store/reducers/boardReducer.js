@@ -31,6 +31,13 @@ const boardReducer = (boardState = initialState, action) => {
         isLoading: false,
       };
     }
+    case "SUCCESS_ADD_BOARD": {
+      return {
+        ...boardState,
+        boardList: [...boardState.boardList, action.payload],
+        isLoading: false,
+      };
+    }
     case "SUCCESS_GET_ACTIVE_BOARD": {
       return {
         ...boardState,
@@ -45,7 +52,7 @@ const boardReducer = (boardState = initialState, action) => {
         isLoading: false,
       };
     }
-    case "CHANGE_CHOSEN_BOARD_ID":
+    case "CHANGE_INPUT_BOARD":
       return {
         ...boardState,
         [action.payload.target.name] : action.payload.target.value,

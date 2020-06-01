@@ -41,9 +41,29 @@ export const getBoardList = () => {
   };
 };
 
+export const addBoard = () => {
+  const tokenUser = localStorage.getItem("token");
+  return async (dispatch, getState) => {
+    await axios({
+      method: "POST",
+      url: baseUrl + "/board",
+      headers: { Authorization: `Bearer ${tokenUser}` },
+      data :{
+        title : getState().board.newTitle
+      }
+    })
+      .then(async (response) => {
+        dispatch({ type: "SUCCESS_ADD_BOARD", payload: response.data });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
 export const changeInputBoard = (e) => {
   return {
-    type: "CHANGE_CHOSEN_BOARD_ID",
+    type: "CHANGE_INPUT_BOARD",
     payload: e,
   };
 };

@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { connect } from "react-redux";
 import { doLogIn, changeInputUser } from "../store/actions/userAction";
 import Header from "../components/Header";
 
-class Login extends Component {
+class SignIn extends Component {
   postLogin = async () => {
     await this.props.doLogIn();
     if (localStorage.getItem("login_status")) {
@@ -18,8 +19,8 @@ class Login extends Component {
       return (
         <Redirect
           to={{
-            pathname: "/signin",
-            state: { message: "You must sign in first!" },
+            pathname: "/",
+            // state: { message: "You must sign in first!" },
           }}
         />
       );
@@ -45,7 +46,8 @@ class Login extends Component {
                 placeholder="password"
                 onChange={(e) => this.props.changeInputUser(e)}
               />
-              <button onClick={() => this.postLogin()}>login</button>
+              <button onClick={() => this.postLogin()}>sign in</button>
+              <p style={{color:"#3f51b5", marginTop : "20px"}}>Didn't have have an account yet? <br/> <Link to="/signup" style={ { color: "#3f51b5" }}>SIGN UP</Link></p>
               <p style={{ color: "red", marginTop: "10px" }}>{message}</p>
             </form>
           </div>
@@ -68,4 +70,4 @@ const mapDispatchToProps = {
   doLogIn,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

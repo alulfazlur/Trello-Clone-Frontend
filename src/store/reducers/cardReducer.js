@@ -40,7 +40,7 @@ export default function cardReducer(cardState = initialState, action) {
       case "SUCCESS_ADD_CARD_MEMBER":
       return {
         ...cardState,
-        cardMembers : action.payload
+        cardMembers : [...cardState.cardMembers, action.payload]
         // isLoading: true,
       };
       case "SUCCESS_DELETE_CARD_MEMBER":
@@ -58,7 +58,7 @@ export default function cardReducer(cardState = initialState, action) {
       case "SUCCESS_ADD_CARD_LABEL":
       return {
         ...cardState,
-        cardLabels : action.payload
+        cardLabels : [...cardState.cardLabels, action.payload]
         // isLoading: true,
       };
       case "SUCCESS_DELETE_CARD_LABEL":

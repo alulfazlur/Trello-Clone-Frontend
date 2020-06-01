@@ -21,7 +21,28 @@ export const doLogIn = (props) => {
           }
         })
         .catch(() => {
-          alert("Password atau Username anda salah. Coba lagi :) ");
+          alert("Password or Username is not match. Try again!");
+        });
+    };
+  };
+
+  export const doSignup = (props) => {
+    return async (dispatch, getState) => {
+      await axios({
+        method: "POST",
+        url: baseUrl + "/user",
+        data: {
+          username: getState().user.userName,
+          password: getState().user.passWord,
+          name: getState().user.name,
+          email: getState().user.email,
+        },
+      })
+        .then( () => {
+            dispatch({ type: "SUCCESS_SIGNUP"});
+        })
+        .catch(() => {
+          alert("Make sure you fill all the data!");
         });
     };
   };
@@ -37,8 +58,8 @@ export const doLogIn = (props) => {
         .then(async (response) => {
             dispatch({ type: "SUCCESS_GET_BIO", payload: response.data });
         })
-        .catch(() => {
-          alert("Password atau Username anda salah. Coba lagi :) ");
+        .catch((error) => {
+          console.log(error);;
         });
     };
   };
