@@ -63,7 +63,7 @@ const MoveMenu = (props) => {
   return (
     <div className="menu">
       <Paper className={classes.paper}>
-        <Grid container>
+        <Grid container className="menu-move">
           <Grid item xs={12} container className="menu-title">
             <Grid item xs={10}>
               <Typography
@@ -192,7 +192,7 @@ const MoveMenu = (props) => {
                   style={{ textDecoration: "none" }}
                   disableUnderline={true}
                 >
-                {chosenList.length !== 0 ? (
+                {props.chosenBoard.lists.length !== 0 ? (
                 <React.Fragment>
                 {props.chosenBoard.id === props.activeBoard.id ? 
                   (

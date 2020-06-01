@@ -461,9 +461,50 @@ background: #4c61d8;
     color: white !important;
     background-color: #0079bf !important;
     border: #0079bf 2px solid;
+}
+.add-board-div .MuiButtonBase-root:hover{
+background-color: inherit !important;
+color: #0079bf !important;
+border: #0079bf 2px solid;
+}
+
+.right-modal-cover .MuiIconButton-root{
+    margin-left: 30px !important;
+margin-top: 10px !important;
+background-color: hsla(0,0%,100%,.24) !important;
+justify-content: center;
+width: 70% !important;
+border-radius: 3px !important;
+color: #172b4d !important;
+font-size: 14px !important;
+line-height: 20px !important;
+font-weight: 400 !important;
+}
+.right-modal-cover .MuiIconButton-root:hover{
+background-color: rgba(187, 187, 187, 0.24) !important;
+}
+
+.right-modal-cover-remove .MuiIconButton-root{
+    margin-top: 10px !important;
+    background-color: rgba(125, 139, 161, 0.287) !important;
+    justify-content: center !important;
+    text-align: center !important;
+    width: 100% !important;
+    border-radius: 3px !important;
+    color: #172b4d !important;
+    font-size: 14px !important;
+    line-height: 20px !important;
+    font-weight: 400 !important;
     }
-    .add-board-div .MuiButtonBase-root:hover{
-        background-color: inherit !important;
-        color: #0079bf !important;
-        border: #0079bf 2px solid;
-        }
+.right-modal-cover-remove .MuiIconButton-root:hover{
+background-color: rgba(9, 30, 66, 0.123) !important;
+}
+.right-modal-cover-remove .MuiIconButton-label{
+font-size: 13px !important;
+justify-content: center !important;
+    text-align: center !important;
+}
+
+.menu-move .MuiNativeSelect-select.MuiNativeSelect-select{
+    padding-right: 5px !important;
+}

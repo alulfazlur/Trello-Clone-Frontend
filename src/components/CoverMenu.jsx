@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     width: "304px",
-    minHeight: "220px",
+    minHeight: "290px",
     backgroundColor: "#f4f5f7",
     boxShadow: theme.shadows[5],
     borderRadius: "3px",
@@ -24,11 +24,6 @@ const useStyles = makeStyles((theme) => ({
 
 const CoverMenu = (props) => {
   const classes = useStyles();
-
-  const handleChange = (event) => {
-    const cardId = props.cardId;
-    props.changeCardCover(props.cardId, event.target.value);
-    }
 
   const availableCover = [
     "#61bd4f",
@@ -67,12 +62,7 @@ const CoverMenu = (props) => {
             <hr style={{ width: "90%", opacity: "15%" }} />
           </Grid>
 
-          <Grid
-            item
-            xs={12}
-            style={{ padding: "0 0 10px" }}
-            className="no-decoration"
-          >
+          <Grid item xs={12} style={{ padding: "0 0 10px" }}>
             <IconButton
               color="inherit"
               style={{ height: "35px", transition: "none" }}
@@ -81,35 +71,53 @@ const CoverMenu = (props) => {
             </IconButton>
           </Grid>
 
-            <Grid
-              container
-              xs={12}
-              style={{paddingLeft:"5px"}}
-            >
-          {availableCover.map((el, index) => (
-            <Grid
-              container
-              xs={4}
-              className="label-list-modal"
-              style={{ marginBottom:"10px"}}
-            >
-              <IconButton
-                key={index}
-                color="inherit"
-                style={{ height: "35px" }}
-                onClick={(id, listId, cover) => props.changeCardCover(props.cardId, props.listId, el)}
+          <Grid container xs={12} style={{ paddingLeft: "5px" }}>
+            {availableCover.map((el, index) => (
+              <Grid
+                container
+                xs={4}
+                className="label-list-modal"
+                style={{ marginBottom: "10px" }}
               >
-                <Grid item xs={10}>
-                  <div
-                    color="inherit"
-                    className="label-list-menu"
-                    style={{ height: "50px", width:"75px", backgroundColor: `${el}`}}
-                  ></div>
-                </Grid>
-              </IconButton>
-            </Grid>
-          ))}
-        </Grid>
+                <IconButton
+                  key={index}
+                  color="inherit"
+                  style={{ height: "35px" }}
+                  onClick={(id, listId, cover) =>
+                    props.changeCardCover(props.cardId, props.listId, el)
+                  }
+                  onMouseDown={!props.cardCover ? props.handleMenuClose : false}
+                >
+                  <Grid item xs={10}>
+                    <div
+                      color="inherit"
+                      className="label-list-menu"
+                      style={{
+                        height: "50px",
+                        width: "75px",
+                        backgroundColor: `${el}`,
+                      }}
+                    ></div>
+                  </Grid>
+                </IconButton>
+              </Grid>
+            ))}
+          </Grid>
+
+          <Grid container xs={12} style={{ padding: "0px 20px" }} className="right-modal-cover-remove">
+          <IconButton
+              color="inherit"
+              style={{ height: "35px", justifyContent: "center" }}
+              onClick={(id, listId, cover) =>
+                props.changeCardCover(props.cardId, props.listId, "")
+              }
+              onMouseDown={props.cardCover ? props.handleMenuClose : false}
+            >
+              <Typography variant="body1" style={{ padding: "0 5px" }}>
+              Remove Cover
+              </Typography>
+            </IconButton>
+          </Grid>
         </Grid>
       </Paper>
     </div>

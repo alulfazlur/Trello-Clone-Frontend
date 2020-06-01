@@ -145,6 +145,7 @@ const CardModal = (props) => {
         userBio={props.userBio}
         // handleCardMember={props.handleCardMember}
         changeCardCover={props.changeCardCover}
+        cardCover={props.cardCover}
       />
     </Menu>
   );
@@ -236,44 +237,87 @@ const CardModal = (props) => {
   return (
     <div className="card-modal">
       <Paper className={classes.paper}>
-      { props.cardCover ? (
-      <Grid xs style={{backgroundColor:props.cardCover, height:"116px", minWidth: "100%"}}>
-      </Grid>):(false)}
-          <Grid item xs={12} sm container style={{padding:"15px 5px"}}>
-            <Grid item xs={1} style={{ textAlign: "center" }}>
-              <CreditCardIcon style={{ paddingTop: "5px", fontSize: "25px" }} />
-            </Grid>
-            <Grid item xs={10}>
-              <Typography
-                gutterBottom
-                variant="h6"
-                className={classes.title}
-                style={{
-                  color: "black",
-                  fontWeight: "bolder",
-                }}
-              >
-                {props.text}
+        {props.cardCover ? (
+          <Grid
+            xs={12}
+            style={{
+              backgroundColor: props.cardCover,
+              height: "116px",
+              minWidth: "100%",
+            }}
+          >
+            <Grid item xs={12} container>
+              <Grid item xs={11}>
+                {" "}
+              </Grid>
+              <Grid item xs={1} style={{ paddingTop: "20px", paddingLeft: "15px" }} >
+                <IconButton onClick={props.handleClose}>
+                  <CloseIcon style={{ color: "black" }} />
+                </IconButton>
+              </Grid>
+                <Grid item xs={12} container>
+              <Grid item xs={10}>
+                {" "}
+              </Grid>
+                <Grid item xs={2} className="right-modal-cover">
+          <IconButton
+              color="inherit"
+              style={{ height: "35px" }}
+              aria-controls="cover-menu"
+              onClick={handleCoverMenuOpen}
+            >
+              <VideoLabelIcon style={{ fontSize: "15px" }} />
+              <Typography variant="body1" style={{ padding: "0 5px" }}>
+                Cover
               </Typography>
-              <Typography
-                gutterBottom
-                variant="subtitle2"
-                style={{
-                  color: "gray",
-                }}
-              >
-                in list{" "}
-                <span style={{ textDecoration: "underline" }}>
-                  {props.listTitle}
-                </span>
-              </Typography>
+            </IconButton>
+              </Grid>
+              </Grid>
             </Grid>
+          </Grid>
+
+        ) : (
+          false
+        )}
+        <Grid item xs={12} sm container style={{ padding: "15px 5px" }}>
+          <Grid item xs={1} style={{ textAlign: "center" }}>
+            <CreditCardIcon style={{ paddingTop: "5px", fontSize: "25px" }} />
+          </Grid>
+          <Grid item xs={10}>
+            <Typography
+              gutterBottom
+              variant="h6"
+              className={classes.title}
+              style={{
+                color: "black",
+                fontWeight: "bolder",
+              }}
+            >
+              {props.text}
+            </Typography>
+            <Typography
+              gutterBottom
+              variant="subtitle2"
+              style={{
+                color: "gray",
+              }}
+            >
+              in list{" "}
+              <span style={{ textDecoration: "underline" }}>
+                {props.listTitle}
+              </span>
+            </Typography>
+          </Grid>
+          {!props.cardCover ? (
             <Grid item xs={1} style={{ paddingLeft: "20px" }}>
               <IconButton onClick={props.handleClose}>
                 <CloseIcon style={{ color: "black" }} />
               </IconButton>
             </Grid>
-          </Grid>
+          ) : (
+            false
+          )}
+        </Grid>
 
         <Grid
           item
@@ -281,11 +325,11 @@ const CardModal = (props) => {
           sm
           container
           spacing={2}
-          style={{padding:"0px 5px"}}
+          style={{ padding: "0px 5px" }}
         >
           {/* Kiri */}
           <Grid item xs={9}>
-            <Grid item xs={12} sm container style={{paddingLeft:"45px"}}>
+            <Grid item xs={12} sm container style={{ paddingLeft: "45px" }}>
               {props.cardMembers.length !== 0 ? (
                 <Grid item xs>
                   <Grid item xs={12} className="right-modal">
@@ -356,7 +400,7 @@ const CardModal = (props) => {
               )}
             </Grid>
 
-            <Grid container style={{padding:"25px 5px"}}>
+            <Grid container style={{ padding: "25px 5px" }}>
               <Grid item xs={12} sm container>
                 <Grid item xs={1} style={{ textAlign: "center" }}>
                   <SubjectIcon style={{ fontSize: "25px" }} />
@@ -384,7 +428,7 @@ const CardModal = (props) => {
               </Grid>
             </Grid>
 
-            <Grid container style={{padding:"10px 5px"}}>
+            <Grid container style={{ padding: "10px 5px" }}>
               <Grid item xs={12} sm container>
                 <Grid item xs={1} style={{ textAlign: "center" }}>
                   <TocIcon style={{ fontSize: "25px" }} />
@@ -414,7 +458,7 @@ const CardModal = (props) => {
               </Grid>
             </Grid>
 
-            <Grid container style={{padding:"10px 5px"}}>
+            <Grid container style={{ padding: "10px 5px" }}>
               <Grid item xs={12} sm container>
                 <Grid item xs={1} style={{ textAlign: "center" }}>
                   <AccountCircle style={{ fontSize: "40px" }} />
@@ -474,16 +518,21 @@ const CardModal = (props) => {
                 Attachment
               </Typography>
             </IconButton>
-            <IconButton color="inherit" style={{ height: "35px" }}
-            aria-controls="cover-menu"
+          {!props.cardCover ? (
+            <IconButton
+              color="inherit"
+              style={{ height: "35px" }}
+              aria-controls="cover-menu"
               onClick={handleCoverMenuOpen}
-              >
+            >
               <VideoLabelIcon style={{ fontSize: "15px" }} />
               <Typography variant="body1" style={{ padding: "0 5px" }}>
                 Cover
               </Typography>
             </IconButton>
-
+            ) : (
+            false
+          )}
             <h3 style={{ paddingTop: "15px" }}>power-ups</h3>
             <IconButton
               color="inherit"
