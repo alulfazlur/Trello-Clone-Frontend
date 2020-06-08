@@ -1,5 +1,6 @@
 import axios from "axios";
-const baseUrl = process.env.REACT_APP_PUBLIC_URL
+// const baseUrl = process.env.REACT_APP_PUBLIC_URL
+const baseUrl = "https://trello-be.fazlurtech.my.id";
 
 export const getList = (boardId) => {
   return async (dispatch) => {
