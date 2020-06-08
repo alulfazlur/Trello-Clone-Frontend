@@ -18,6 +18,7 @@ script:
 - sudo chmod +x deploy.sh
 - sudo chmod 600 deploy_rsa
 after_script:
+- npm run build
 - docker build -t ${DOCKER_HUB_ORG}/${DOCKER_IMAGE_NAME}:frontend-${TRAVIS_BUILD_ID}
   .
 - docker push ${DOCKER_HUB_ORG}/${DOCKER_IMAGE_NAME}:frontend-${TRAVIS_BUILD_ID}
