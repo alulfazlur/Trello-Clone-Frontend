@@ -14,4 +14,4 @@ This project is a clone of a trello built with React-redux and using library rea
 Alterra Academy assignment for my personal portofolio
 
 ## Libaries
-react, react-beautiful-dnd,
+react, react-beautiful-dnd, redux, react-textarea-autosize
